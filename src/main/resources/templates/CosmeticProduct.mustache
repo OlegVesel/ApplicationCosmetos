@@ -1,0 +1,204 @@
+{{>parts/head}}
+<h3>
+    {{#message}}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{message}}
+            <button type="button" class="close fade" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {{/message}}
+</h3>
+
+
+<hr>
+
+<button class="btn btn-primary" data-toggle="collapse" href="#dropGroup1" role="button" aria-expanded="false"
+        aria-haspopup="true">
+    Добавить новый продукт<i class="ml-2 fas fa-caret-down"></i>
+</button>
+<div class="collapse" id="dropGroup1">
+    <div class="form-group mt-2">
+        <form method="post" action="/app">
+            <div class="form-group">
+                <input list="text_name" name="name" class="form-control" placeholder="Выберите категорию">
+                <datalist id="text_name">
+                    {{#listOfProducts}}
+                        <option value="{{.}}">{{.}}</option>
+                    {{/listOfProducts}}
+                </datalist>
+            </div>
+            <div class="form-group">
+                <input list="text_brand" name="brand" class="form-control" placeholder="Выберите бренд">
+                <datalist id="text_brand">
+                    {{#listOfBrands}}
+                        <option value="{{.}}">{{.}}</option>
+                    {{/listOfBrands}}
+                </datalist>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="volume" placeholder="Введите объем">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="number" name="time_after_opening"
+                       placeholder="Введите срок после вскрытия" min="0">
+            </div>
+            <div class="form-group">
+                <input class="form-control calendar-list" type="date" name="shelf_life"
+                       placeholder="Введите срок годности">
+            </div>
+            <a class="btn btn-primary mb-2" data-toggle="collapse" href="#dropOpened" type="button" role="button"
+               aria-expanded="false"
+               aria-haspopup="true"
+            >
+                Средство вскрыто
+                <i class="ml-2 fas fa-caret-down"></i>
+            </a>
+            <div class="collapse form-group" id="dropOpened">
+                <input class="form-control mt-2" type="date" name="autopsy_date" placeholder="Введите дату вскрытия">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="note" placeholder="Примечание">
+            </div>
+
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+            <button class="btn btn-primary" type="submit">Добавить</button>
+        </form>
+    </div>
+</div>
+<hr>
+
+
+<div>
+    <h3>Поиск</h3>
+    <form method="get" action="/app">
+        <div class=" form-group mt-2">
+            <div class="col">
+                <!-- кнопка для вызова строки поиска по категории-->
+                <div class="row btn-group">
+                    <p class="btn btn-primary" data-toggle="collapse" data-target="#chkFilterName"
+                       aria-expanded="false" aria-checked="true">Поиск по категории</p>
+                    <!-- кнопка для вызова строки поиска по бренду-->
+                    <p class="btn btn-primary" data-toggle="collapse" data-target="#chkFilterBrand">Поиск по бренду</p>
+                </div>
+
+                <div class="collapse form-group my-2" id="chkFilterName">
+                    <input list="fieldFilterName" name="filter_name" class="form-control"
+                           placeholder="Выберите категорию"
+                        {{#filter_name}} value="{{filter_name}}" {{/filter_name}}/>
+                    <datalist id="fieldFilterName">
+                        {{#listOfProducts}}
+                            <option>{{.}}</option>
+                        {{/listOfProducts}}
+                    </datalist>
+                </div>
+
+
+                <div class="collapse" id="chkFilterBrand">
+                    <input list="fieldFilterBrand" name="filter_brand" class="form-control"
+                           placeholder="Выберите бренд"
+                        {{#filter_brand}} value="{{filter_brand}}" {{/filter_brand}}/>
+                    <datalist id="fieldFilterBrand">
+                        {{#listOfBrands}}
+                            <option>{{.}}</option>
+                        {{/listOfBrands}}
+                    </datalist>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="row my-3">
+                    <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Поиск</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div>
+    <h3>Мои запасы</h3>
+</div>
+<div class="table-responsive">
+    <table id="table_product" class="table table-hover table-sm">
+        <thead>
+        <tr>
+            <th class="align-middle" style="width: 1px">Средство</th>
+            <th class="align-middle" style="width: 1px">Бренд</th>
+            <th class="align-middle" style="width: 1px">Объем</th>
+            <th class="align-middle" style="width: 1px">Срок после вскрытия</th>
+            <th class="align-middle" style="width: 1px">Срок годности</th>
+            <th class="align-middle" style="width: 1px">Дата вскрытия</th>
+            <th class="align-middle" style="width: 1px">Примечание</th>
+            <th class="align-middle" style="width: 1px">Пора выбрасывать</th>
+            <th class="align-middle" style="width: 1px">Действие</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {{#allCosmetic}}
+            <tr {{#is_open}} class="table-danger" {{/is_open}} >
+                <td>{{name}}</td> <!--  наименование средства (string) -->
+                <td>{{brand}}</td><!--  наименование бренда (string) -->
+                <td>{{volume}}</td><!--  объем (string) -->
+                <td>{{time_after_opening}}</td><!--  срок после вскрытия (int) -->
+                <td>{{shelf_life}}</td><!--  срок годности (date) -->
+                <td>{{#autopsy_date}}{{autopsy_date}}{{/autopsy_date}}{{^autopsy_date}}Не вскрыто{{/autopsy_date}}</td>
+                <!--  дата вскрытия (date)  -->
+                <td>{{note}}</td><!--  примечания (string)  -->
+                <td>{{date_death}}</td>
+                <td>
+
+                    <div class="btn-group" id="{{id}}">
+                        <!--кнопка копирования средства -->
+                        <form action="/app/copy/{{id}}" method="post">
+                            <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+                            <button class="btn far fa-clone"></button>
+                        </form>
+                        <!--кнопка перехода в окно обновления средства -->
+                        <!--                       <form action="/app/edit/{{id}}" method="get">-->
+                        <button class="btn  fas fa-pencil-alt" type="submit" data-toggle="modal"
+                                data-target="#modelId"></button>
+
+                        <!--                      </form>-->
+                        <!--кнопка удаления средства -->
+                        <form action="/app/delete/{{id}}" method="post">
+                            <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+                            <button class="btn  fas fa-trash" type="submit"></button>
+                        </form>
+
+                    </div>
+                </td>
+
+            </tr>
+        {{/allCosmetic}}
+        </tbody>
+    </table>
+
+
+    <!-- модальное окно для редактирования записи о продукте -->
+    <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: rgb(0, 123, 255);">
+                    <h5 class="modal-title">Изменить запись</h5>
+
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <input id="inNote" type="text"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+{{>parts/foot}}

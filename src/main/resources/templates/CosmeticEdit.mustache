@@ -1,0 +1,119 @@
+{{>parts/head}}
+
+{{#cosmeticProduct}}
+<div class="row">
+    <div class="col-4">
+        <div class="row">
+            <h3>{{cosmeticProduct.getName}} {{cosmeticProduct.getBrand}}</h3>
+        </div>
+        <div class="row">
+            <a class="text">Объем: {{volume}}</a>
+        </div>
+        <div class="row">
+            <a>Срок после вскрытия: {{time_after_opening}}</a>
+        </div>
+        <div class="row">
+            <a>Срок годности: {{shelf_life}}</a>
+        </div>
+        <div class="row">
+            <a>Дата вскрытия: {{#autopsy_date}}{{autopsy_date}}{{/autopsy_date}} {{^autopsy_date}}Не
+                вскрыто{{/autopsy_date}}</a>
+        </div>
+        <div class="row">
+            <a>Примечание: {{note}}</a>
+        </div>
+    </div>
+    <div class="col-7 ml-5">
+        <form method="post" action="/app/{{id}}">
+            <div class="row">
+                <p class="btn btn-primary" data-toggle="collapse" href="#dropNameBrand" role="button"
+                   aria-expanded="false"
+                   aria-haspopup="true">Изменить название</p>
+                <div class="col">
+
+                    <div id="dropNameBrand" class="collapse ml-2">
+                        <div class="input-group">
+                            <input class="form-control" list="inputName" type="text" name="name" value="{{name}}">
+                            <datalist id="inputName">
+                                {{#listOfProducts}}
+                                <option>{{.}}</option>
+                                {{/listOfProducts}}
+                            </datalist>
+
+                            <input class="form-control" list="inputBrand" type="text" name="brand" value="{{brand}}">
+                            <datalist id="inputBrand">
+                                {{#listOfBrands}}
+                                <option>{{.}}</option>
+                                {{/listOfBrands}}
+                            </datalist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <p class="btn  btn-primary" data-toggle="collapse" href="#dropEditVolume" role="button"
+                   aria-expanded="false"
+                   aria-haspopup="true">Изменить объем</p>
+                <div class="col">
+                    <div id="dropEditVolume" class="collapse  ml-2">
+                        <input type="text" name="volume" class="form-control" value="{{volume}}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <p class="btn  btn-primary" data-toggle="collapse" href="#dropEditTimeAfterOpening" role="button"
+                   aria-expanded="false"
+                   aria-haspopup="true">Изменить время после вскрытия</p>
+                <div class="col">
+                    <div id="dropEditTimeAfterOpening" class="collapse ml-2">
+                        <input type="number" name="time_after_opening" class="form-control small"
+                               value="{{time_after_opening}}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <p class="btn  btn-primary" data-toggle="collapse" href="#dropEditShelfLife" role="button"
+                   aria-expanded="false"
+                   aria-haspopup="true">Изменить срок годности</p>
+                <div class="col">
+                    <div id="dropEditShelfLife" class="collapse ml-2">
+                        <input type="text" name="shelf_life" class="form-control small" value="{{shelf_life}}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <p class="btn  btn-primary" data-toggle="collapse" href="#dropEditAutopsyDate" role="button"
+                   aria-expanded="false"
+                   aria-haspopup="true">Изменить дату вскрытия</p>
+                <div class="col">
+                    <div id="dropEditAutopsyDate" class="collapse ml-2">
+                        <input type="text" name="autopsy_date" class="form-control small"
+                               {{#autopsy_date}}value="{{autopsy_date}}" {{/autopsy_date}}>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <p class="btn  btn-primary" data-toggle="collapse" href="#dropEditNote" role="button"
+                   aria-expanded="false"
+                   aria-haspopup="true">Изменить примечание</p>
+                <div class="col">
+                    <div id="dropEditNote" class="collapse ml-2">
+                        <input type="text" name="note" class="form-control small" value="{{note}}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <a class="btn btn-light ml-2" href="/app">Назад</a>
+            </div>
+        </form>
+
+    </div>
+
+
+
+</div>
+{{/cosmeticProduct}}
+{{>parts/foot}}

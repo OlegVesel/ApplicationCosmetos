@@ -1,0 +1,30 @@
+{{>parts/head}}
+
+<h3>Добро пожаловать на домашнюю страницу</h3>
+<h1>Привет, {{user.getUsername}}</h1>
+<div class="row">
+    <div class="col-4">
+        <div class="card border-primary">
+            <img src="/image/card_home_cosmetic.jpg" class="card-img-top" alt="Card image cap">
+            <div class="card-body text-center">
+                <h3 class="card-title">Моя косметика</h3>
+                <p class="card-text">Добавление и удаление косметических средств, контроль за ними</p>
+            </div>
+            <a class="btn btn-primary btn-block stretched-link" href="/app">Перейти</a>
+        </div>
+    </div>
+    <div class="col-4">
+        {{#user.isAdmin}}
+        <div class="card border-primary ">
+            <img src="/image/card_home_admin.jpg" class="card-img-top" alt="Card image cap">
+            <div class="card-body text-center">
+                <h3 class="card-title">Управление пользователями</h3>
+                <p class="card-text">Вкладка для администратора, для управления пользователями</p>
+            </div>
+            <a class="btn btn-primary btn-block stretched-link" href="/user">Перейти</a>
+
+        </div>
+        {{/user.isAdmin}}
+    </div>
+</div>
+{{>parts/foot}}

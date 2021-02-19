@@ -1,0 +1,40 @@
+{{>parts/head}}
+
+
+<table border="2" class="table table-sm">
+    <thead>
+    <tr>
+        <th>Имя</th>
+        <th>Роль</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {{#users}}
+    <form action="/user/{{id}}" method="post">
+        <tr>
+            <td>{{username}}</td>
+            <td>
+                {{#roles}}
+                {{.}}
+                {{/roles}}
+            </td>
+            <td><a href="/user/{{id}}" class="btn btn-primary btn-sm ">Изменить пользователя</a>
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+                <button class="btn btn-danger btn-sm" type="submit" name="{{id}}">Удалить</button>
+            </td>
+        </tr>
+    </form>
+    {{/users}}
+    </tbody>
+</table>
+
+<a href="/" type="button" class="btn btn-primary">Назад</a>
+<div>
+    {{#message}}
+    {{message}}
+    {{/message}}
+</div>
+
+{{>parts/foot}}

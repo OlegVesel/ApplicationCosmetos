@@ -1,0 +1,34 @@
+{{>parts/logRegTemplate}}
+<h3 class="mb-5">Добавление нового пользователя</h3>
+
+{{#message}}
+{{message}}
+{{/message}}
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <form action="/registration" method="post">
+                    <div class="form-group">
+                        <div><label> Имя нового пользователя:<br> <input class="form-control" type="text"
+                                                                         name="username"/> </label></div>
+                        <div><label> Пароль:<br> <input class="form-control" type="password" name="password"/> </label>
+                        </div>
+                    </div>
+                    <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+                    <div><input class="btn btn-primary btn-block"  type="submit" value="Зарегистрироваться"/></div>
+                </form>
+                <a class="btn btn-light btn-block mt-2" href="/login">Выйти</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-4">
+
+    </div>
+</div>
+
+
+
+{{>parts/foot}}

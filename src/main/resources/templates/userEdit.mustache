@@ -1,0 +1,17 @@
+{{>parts/head}}
+<form method="post" action="/user" >
+    <input type="text" name="username" value="{{userEdit.username}}">
+
+    {{#roles}}
+    <div>
+        <label><input type="checkbox" name="{{.}}">{{.}}</label>
+    </div>
+    {{/roles}}
+
+    <input type="hidden"  value="{{userEdit.id}}" name="userId">
+    <input type="hidden"  value="{{_csrf.token}}" name="_csrf">
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a type="button" class="btn btn-light" href="/user">Назад</a>
+</form>
+
+{{>parts/foot}}
