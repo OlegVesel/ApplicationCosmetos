@@ -13,28 +13,38 @@
 
 <hr>
 
-<button class="btn btn-primary" data-toggle="collapse" href="#dropGroup1" role="button" aria-expanded="false"
+<button class="btn btn-primary"  href="#dropGroup1" role="button" aria-expanded="false"
         aria-haspopup="true">
     Добавить новый продукт<i class="ml-2 fas fa-caret-down"></i>
 </button>
-<div class="collapse" id="dropGroup1">
+<div  id="dropGroup1">
     <div class="form-group mt-2">
         <form method="post" action="/app">
             <div class="form-group">
-                <input list="text_name" name="name" class="form-control" placeholder="Выберите категорию">
+                <input list="text_name" name="name" class="form-control {{#nameError}}is-invalid{{/nameError}}{{^nameError}} {{/nameError}} " placeholder="Выберите категорию">
                 <datalist id="text_name">
                     {{#listOfProducts}}
                         <option value="{{.}}">{{.}}</option>
                     {{/listOfProducts}}
                 </datalist>
+                {{#nameError}}
+                <div class="invalid-feedback">
+                    {{nameError}}
+                </div>
+                {{/nameError}}
             </div>
             <div class="form-group">
-                <input list="text_brand" name="brand" class="form-control" placeholder="Выберите бренд">
+                <input list="text_brand" name="brand" class="form-control {{#brandError}}is-invalid{{/brandError}}{{^brandError}} {{/brandError}}" placeholder="Выберите бренд">
                 <datalist id="text_brand">
                     {{#listOfBrands}}
                         <option value="{{.}}">{{.}}</option>
                     {{/listOfBrands}}
                 </datalist>
+                {{#brandError}}
+                    <div class="invalid-feedback">
+                        {{brandError}}
+                    </div>
+                {{/brandError}}
             </div>
             <div class="form-group">
                 <input class="form-control" type="text" name="volume" placeholder="Введите объем">

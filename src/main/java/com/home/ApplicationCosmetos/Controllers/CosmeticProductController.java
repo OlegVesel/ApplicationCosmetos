@@ -10,9 +10,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -66,30 +71,28 @@ public class CosmeticProductController {
 
     @PostMapping("/app")
     public String addCosmeticProduct(@AuthenticationPrincipal User user,
-                                     String name,
-                                     String brand,
-                                     String volume,
-                                     int time_after_opening,
-                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate shelf_life,
-                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate autopsy_date,
-                                     String note,
-                                     Model model) {
+                                     @Valid CosmeticProduct cosmeticProduct,
+                                     BindingResult bindingResult,
+                                     Model model)
+    {
 
         LocalDate date_death;
-        if (autopsy_date.plusMonths(time_after_opening).isBefore(shelf_life))
-            date_death = autopsy_date.plusMonths(time_after_opening);
-        else date_death = shelf_life;
+        if (cosmeticProduct.getAutopsy_date()!=null && cosmeticProduct.getAutopsy_date()
+                .plusMonths(cosmeticProduct.getTime_after_opening())
+                .isBefore(cosmeticProduct.getShelf_life()))
+            date_death = cosmeticProduct.getAutopsy_date()
+                    .plusMonths(cosmeticProduct.getTime_after_opening());
+        else date_death = cosmeticProduct.getShelf_life();
+
+        cosmeticProduct.setOwner(user);
+        cosmeticProduct.setDate_death(date_death);
 
 
-        CosmeticProduct adding_cosmeticProduct = new CosmeticProduct(name, brand, volume, time_after_opening, shelf_life, autopsy_date, note, date_death, user);
-
-        if (StringUtils.isEmpty(name) | StringUtils.isEmpty(brand)) {
-            model.addAttribute("message", "Поля Название и Бренд должны быть заполнены");
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
+            model.mergeAttributes(errorsMap);
         } else {
-            // model.addAttribute("message", "Успешно добавлено");
-
-            cosmeticProductRepo.save(adding_cosmeticProduct);
-
+            cosmeticProductRepo.save(cosmeticProduct);
         }
 
         Iterable<CosmeticProduct> allCosmetic;

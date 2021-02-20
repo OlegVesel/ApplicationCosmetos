@@ -1,6 +1,11 @@
 package com.home.ApplicationCosmetos.Model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Entity
@@ -8,13 +13,22 @@ public class CosmeticProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotBlank(message = "Поле \"Название\" не должно быть пустым")
+    @Length(max = 255, message = "Поле \"Название\" не должно превышать 255 символов")
     private String name;
+    @NotBlank(message = "Поле \"Бренд\" не должно быть пустым")
+    @Length(max = 255, message = "Поле \"Бренд\" не должно превышать 255 символов")
     private String brand;
+    @NotNull
     private String volume;
     private int time_after_opening; //срок после вскрытия
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate shelf_life; //срок годности
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate autopsy_date; // дата вскрытия
+    @Size(max = 2048)
     private String note; //примечания
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date_death; //когда испортится
 
     @ManyToOne(fetch = FetchType.EAGER)
