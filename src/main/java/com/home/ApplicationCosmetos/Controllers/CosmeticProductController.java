@@ -87,11 +87,12 @@ public class CosmeticProductController {
         cosmeticProduct.setOwner(user);
         cosmeticProduct.setDate_death(date_death);
 
-
         if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);
+            model.addAttribute("cosmeticProduct", cosmeticProduct);
         } else {
+            model.addAttribute("cosmeticProduct", null);
             cosmeticProductRepo.save(cosmeticProduct);
         }
 
