@@ -17,7 +17,8 @@
         aria-haspopup="true">
     Добавить новый продукт<i class="ml-2 fas fa-caret-down"></i>
 </button>
-<div class="collapse {{#cosmeticProduct}}show{{/cosmeticProduct}}{{^cosmeticProduct}} {{/cosmeticProduct}}" id="dropGroup1">
+<div class="collapse {{#cosmeticProduct}}show{{/cosmeticProduct}}{{^cosmeticProduct}} {{/cosmeticProduct}}"
+     id="dropGroup1">
     <div class="form-group mt-2">
         <form method="post" action="/app">
             <div class="form-group">
@@ -36,6 +37,7 @@
                         {{nameError}}
                     </div>
                 {{/nameError}}
+
             </div>
             <div class="form-group">
                 <input list="text_brand" name="brand"
@@ -94,7 +96,14 @@
                 <input class="form-control mt-2" type="date" name="autopsy_date" placeholder="Введите дату вскрытия">
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" name="note" placeholder="Примечание">
+                <textarea  class="form-control {{#noteError}}is-invalid{{/noteError}}{{^noteError}} {{/noteError}}" name="note" placeholder="Примечание"
+                    {{#cosmeticProduct.getNote}}value="{{cosmeticProduct.getNote}}" {{/cosmeticProduct.getNote}}
+                    {{^cosmeticProduct.getNote}} {{/cosmeticProduct.getNote}}></textarea>
+                {{#noteError}}
+                    <div class="invalid-feedback">
+                        {{noteError}}
+                    </div>
+                {{/noteError}}
             </div>
 
             <input type="hidden" name="_csrf" value="{{_csrf.token}}">
@@ -192,11 +201,9 @@
                             <button class="btn far fa-clone"></button>
                         </form>
                         <!--кнопка перехода в окно обновления средства -->
-                        <!--                       <form action="/app/edit/{{id}}" method="get">-->
-                        <button class="btn  fas fa-pencil-alt" type="submit" data-toggle="modal"
-                                data-target="#modelId"></button>
-
-                        <!--                      </form>-->
+                        <form action="/app/edit/{{id}}" method="get">
+                            <button class="btn  fas fa-pencil-alt" type="submit"></button>
+                        </form>
                         <!--кнопка удаления средства -->
                         <form action="/app/delete/{{id}}" method="post">
                             <input type="hidden" name="_csrf" value="{{_csrf.token}}">
@@ -212,26 +219,6 @@
     </table>
 
 
-    <!-- модальное окно для редактирования записи о продукте -->
-    <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: rgb(0, 123, 255);">
-                    <h5 class="modal-title">Изменить запись</h5>
-
-                </div>
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <input id="inNote" type="text"/>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 </div>

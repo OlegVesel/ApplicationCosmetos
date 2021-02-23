@@ -5,19 +5,17 @@ import com.home.ApplicationCosmetos.Model.Role;
 import com.home.ApplicationCosmetos.Model.User;
 import com.home.ApplicationCosmetos.Repo.CosmeticProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @Controller

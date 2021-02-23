@@ -28,7 +28,7 @@ public class CosmeticProduct {
     private LocalDate shelf_life; //срок годности
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate autopsy_date; // дата вскрытия
-    @Size(max = 2048)
+    @Size(max = 2048, message = "Примечание не должно быть больше чем 2048 символов")
     private String note; //примечания
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date_death; //когда испортится

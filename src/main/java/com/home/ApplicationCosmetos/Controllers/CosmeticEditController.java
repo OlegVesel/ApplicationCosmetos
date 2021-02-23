@@ -39,6 +39,7 @@ public class CosmeticEditController {
                                       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate autopsy_date,
                                       String note,
                                       Model model) {
+
         CosmeticProduct productById = null;
         if (cosmeticProductRepo.findById(id).isPresent()) productById = cosmeticProductRepo.findById(id).get();
 
