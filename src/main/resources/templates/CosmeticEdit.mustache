@@ -6,34 +6,64 @@
             <h3>Редактирование средства</h3>
             <div class="form-group">
                 <form method="post" action="/app/{{id}}">
-                    <input class="form-control my-2" list="inputName" type="text" name="name" value="{{name}}"
+                    <input class="form-control {{#nameError}}is-invalid{{/nameError}}{{^nameError}} {{/nameError}} my-2 "
+                           list="inputName" type="text" name="name" value="{{name}}"
                            placeholder="Выберите категорию"/>
                     <datalist id="inputName">
                         {{#listOfProducts}}
                             <option>{{.}}</option>
                         {{/listOfProducts}}
                     </datalist>
-                    <input class="form-control my-2" list="inputBrand" type="text" name="brand" value="{{brand}}"
+                    {{#nameError}}
+                        <div class="invalid-feedback">
+                            {{nameError}}
+                        </div>
+                    {{/nameError}}
+                    <input class="form-control {{#brandError}}is-invalid{{/brandError}}{{^brandError}} {{/brandError}} my-2"
+                           list="inputBrand" type="text" name="brand" value="{{brand}}"
                            placeholder="Выберите бренд"/>
                     <datalist id="inputBrand">
                         {{#listOfBrands}}
                             <option>{{.}}</option>
                         {{/listOfBrands}}
                     </datalist>
+                    {{#brandError}}
+                        <div class="invalid-feedback">
+                            {{brandError}}
+                        </div>
+                    {{/brandError}}
                     <input class="form-control my-2" type="text" name="volume" value="{{volume}}"
                            placeholder="Введите объем"/>
-                    <input class="form-control my-2" type="number" name="time_after_opening"
+                    <input class="form-control {{#time_after_openingError}}is-invalid{{/time_after_openingError}}{{^time_after_openingError}} {{/time_after_openingError}} my-2"
+                           type="number" name="time_after_opening"
                            value="{{time_after_opening}}" placeholder="Введите срок после вскрытия"/>
-                    <input class="form-control my-2" type="date" name="shelf_life" value="{{shelf_life}}"
+                    {{#time_after_openingError}}
+                        <div class="invalid-feedback">
+                            <p>Укажите срок после вскрытия, если его нет поставьте 0 </p>
+                        </div>
+                    {{/time_after_openingError}}
+                    <input class="form-control {{#shelf_lifeError}}is-invalid{{/shelf_lifeError}}{{^shelf_lifeError}} {{/shelf_lifeError}} my-2"
+                           type="date" name="shelf_life"
+                           {{#editCosmeticProduct.getShelf_life}}value="{{shelf_life}}"{{/editCosmeticProduct.getShelf_life}}
+                           {{^editCosmeticProduct.getShelf_life}}value="{{cosmeticProduct.getShelf_life}}"{{/editCosmeticProduct.getShelf_life}}
                            placeholder="Введите срок годности"/>
+                    {{#shelf_lifeError}}
+                        <div class="invalid-feedback">
+                            {{shelf_lifeError}}
+                        </div>
+                    {{/shelf_lifeError}}
                     <input class="form-control my-2" type="date" name="autopsy_date"
                            {{#autopsy_date}}value="{{autopsy_date}}"{{/autopsy_date}}
                            placeholder="Введите дату вскрытия"/>
-                    <textarea class="form-control  my-2" name="note" placeholder="Примечание"></textarea>
-
-                        <input type="hidden" name="_csrf" value="{{_csrf.token}}">
-                        <button type="submit" class="btn btn-primary">Сохранить</button>
-                        <a class="btn btn-light ml-2" href="/app">Назад</a>
+                    <textarea class="form-control {{#noteError}}is-invalid{{/noteError}}{{^noteError}} {{/noteError}} my-2" name="note" placeholder="Примечание"></textarea>
+                    {{#noteError}}
+                        <div class="invalid-feedback">
+                            {{noteError}}
+                        </div>
+                    {{/noteError}}
+                    <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <a class="btn btn-light ml-2" href="/app">Назад</a>
 
                 </form>
             </div>

@@ -9,9 +9,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/app")
@@ -30,30 +33,36 @@ public class CosmeticEditController {
 
     @PostMapping("{id}")
     public String editCosmeticProduct(@AuthenticationPrincipal User user,
-                                      @PathVariable Long id,
-                                      String name,
-                                      String brand,
-                                      String volume,
-                                      int time_after_opening,
-                                      @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate shelf_life,
-                                      @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate autopsy_date,
-                                      String note,
+                                      @Valid CosmeticProduct editCosmeticProduct,
+                                      BindingResult bindingResult,
                                       Model model) {
 
-        CosmeticProduct productById = null;
-        if (cosmeticProductRepo.findById(id).isPresent()) productById = cosmeticProductRepo.findById(id).get();
+        LocalDate date_death;
+        if (editCosmeticProduct.getAutopsy_date()!=null && editCosmeticProduct.getAutopsy_date()
+                .plusMonths(editCosmeticProduct.getTime_after_opening())
+                .isBefore(editCosmeticProduct.getShelf_life()))
+            date_death = editCosmeticProduct.getAutopsy_date()
+                    .plusMonths(editCosmeticProduct.getTime_after_opening());
+        else date_death = editCosmeticProduct.getShelf_life();
 
-        productById.setName(name);
-        productById.setBrand(brand);
-        productById.setVolume(volume);
-        productById.setTime_after_opening(time_after_opening);
-        productById.setShelf_life(shelf_life);
-        productById.setNote(note);
-        if (!StringUtils.isEmpty(autopsy_date)) {
-            productById.setAutopsy_date(autopsy_date);
+        editCosmeticProduct.setDate_death(date_death);
+        editCosmeticProduct.setOwner(user);
+
+
+        if (bindingResult.hasErrors()){
+            Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
+            model.mergeAttributes(errorsMap);
+            model.addAttribute("editCosmeticProduct", editCosmeticProduct);
         }
-        cosmeticProductRepo.save(productById);
-        return "redirect:/app";
+        else {
+            model.addAttribute("editCosmeticProduct", null);
+            cosmeticProductRepo.save(editCosmeticProduct);
+            return "redirect:/app";
+        }
+        model.addAttribute("listOfProducts", cosmeticProductRepo.distinctName(user.getId()));
+        model.addAttribute("listOfBrands", cosmeticProductRepo.distinctBrand(user.getId()));
+        model.addAttribute("user", user);
+        return "CosmeticEdit";
     }
 
     //метод удаления записи со средством из БД, из шаблона CosmeticProduct  по нажатию на кнопку
