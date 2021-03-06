@@ -91,6 +91,7 @@ public class CosmeticProductController {
             model.addAttribute("cosmeticProduct", cosmeticProduct);
         } else {
             model.addAttribute("cosmeticProduct", null);
+            model.addAttribute("messageSuccess", "Средство успешно добавлено");
             cosmeticProductRepo.save(cosmeticProduct);
         }
 
