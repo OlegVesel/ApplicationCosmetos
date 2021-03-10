@@ -178,15 +178,15 @@
     <table id="table_product" class="table table-striped table-bordered table-hover table-sm ">
         <thead>
         <tr>
-            <th class="align-middle text-center">Средство</th>
-            <th class="align-middle text-center">Бренд</th>
-            <th class="align-middle text-center">Объем</th>
-            <th class="align-middle text-center">Срок после вскрытия</th>
-            <th class="align-middle text-center">Срок годности</th>
-            <th class="align-middle text-center">Дата вскрытия</th>
-            <th class="align-middle text-center" style="width: 1px">Примечание</th>
-            <th class="align-middle text-center">Пора выбрасывать</th>
-            <th class="align-middle text-center">Действие</th>
+            <th class="col1 align-middle text-center">Средство</th>
+            <th class="col2 align-middle text-center">Бренд</th>
+            <th class="col3 align-middle text-center">Объем</th>
+            <th class="col4 align-middle text-center">Срок после вскрытия</th>
+            <th class="col5 align-middle text-center">Срок годности</th>
+            <th class="col6 align-middle text-center">Дата вскрытия</th>
+            <th class="col7 align-middle text-center">Примечание</th>
+            <th class="col8 align-middle text-center">Пора выбрасывать</th>
+            <th class="col9 align-middle text-center">Действие</th>
 
         </tr>
         </thead>
@@ -200,7 +200,7 @@
                 <td>{{shelf_life}}</td><!--  срок годности (date) -->
                 <td>{{#autopsy_date}}{{autopsy_date}}{{/autopsy_date}}{{^autopsy_date}}Не вскрыто{{/autopsy_date}}</td>
                 <!--  дата вскрытия (date)  -->
-                <td>{{note}}</td><!--  примечания (string)  -->
+                <td width="1px">{{note}}</td><!--  примечания (string)  -->
                 <td>{{date_death}}</td>
                 <td>
 

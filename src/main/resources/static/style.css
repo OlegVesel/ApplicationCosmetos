@@ -1,11 +1,45 @@
 body {
     color: #113;
+    background: rgb(0 123 255 / 5%);
 
 }
-button{
-background-color : rgb(255,255,255); !important;
+.button{
 color: rgb(0 123 255); !important;
 }
 .table-striped tbody tr:nth-of-type(odd) {
     background-color: rgb(0 123 255 / 5%); !important;
+}
+/* стили для таблицы отображения средств*/
+table {
+    width: 100%; /* Ширина таблицы в процентах */
+   }
+   .col1 {
+    width: 11%; /* Средство */
+   }
+   .col2 {
+       width: 11%; /*Бренд */
+      }
+   .col3 {
+        width: 11%; /* Объем */
+        }
+   .col4 {
+       width: 11%; /*Срок после вскрытия< */
+      }
+   .col5{
+       width: 12%; /* Срок годности */
+      }
+   .col6 {
+       width: 11%; /* Дата вскрытия*/
+      }
+   .col7 {
+        width: 10%; /* Примечание */
+      }
+   .col8 {
+       width: 12%; /* Пора выбрасывать */
+      }
+   .col9 {
+       width: 11%; /*Действие */
+      }
+.card-body{
+    background-color : rgb(0 123 255 / 5%) !important;
 }
