@@ -1,24 +1,25 @@
 {{>parts/logRegTemplate}}
 
-<h3 class="header mb-5">Добро пожаловать</h3>
+
 <div class="row">
     <div class="col-4">
 
     </div>
-    <div class="col">
-        <div class="card">
+    <div class="col text-center" >
+        <h3 class="header text-center mb-5">Добро пожаловать</h3>
+        <div class="card border" style="border: 2px solid !important;">
             <div class="card-body">
                 <form action="/login" method="post">
                     <div class="form-group">
                         <div>
-                            <label> Имя пользователя:<br>
+                            <label> Имя пользователя:</label>
                                 <input class="form-control" type="text" name="username"/>
-                            </label>
+
                         </div>
                         <div>
-                            <label> Пароль:<br>
+                            <label> Пароль:</label>
                                 <input class="form-control" type="password" name="password"/>
-                            </label>
+
                         </div>
                     </div>
                     <input type="hidden" name="_csrf" value="{{_csrf.token}}">

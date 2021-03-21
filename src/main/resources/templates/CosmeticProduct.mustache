@@ -7,7 +7,6 @@
 
 {{/messageSuccess}}
 
-<span class="mdi mdi-access-point-plus"></span>
 <hr>
 
 <button class="btn btn-primary" data-toggle="collapse" href="#dropGroup1" role="button" aria-expanded="false"
@@ -191,8 +190,8 @@
         </thead>
         <tbody>
         {{#allCosmetic}}
-            <tr {{#is_open}} class="table-danger" {{/is_open}} >
-                <td>{{name}}</td> <!--  наименование средства (string) -->
+            <tr>
+                <td >{{name}}</td> <!--  наименование средства (string) -->
                 <td>{{brand}}</td><!--  наименование бренда (string) -->
                 <td>{{volume}}</td><!--  объем (string) -->
                 <td class="text-center">{{time_after_opening}}</td><!--  срок после вскрытия (int) -->
@@ -229,6 +228,8 @@
 
 
 </div>
-
+<script>
+    console.log(document.getElementById("table_product").value)
+</script>
 
 {{>parts/foot}}

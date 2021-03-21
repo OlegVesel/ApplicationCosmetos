@@ -1,16 +1,17 @@
 {{>parts/logRegTemplate}}
-<h3 class="mb-5">Добавление нового пользователя</h3>
 
 
+<h3 class="text-center mb-5 ">Добавление нового пользователя</h3>
 <div class="row">
     <div class="col-4"></div>
-    <div class="col-4">
-        <div class="card">
+    <div class="col-4 text-center">
+
+        <div class="card" style="border: 2px solid !important;">
             <div class="card-body">
                 <form action="/registration" method="post">
                     <div class="form-group">
                         <div>
-                            <label> Имя нового пользователя:<br>
+                            <label> Имя нового пользователя:</label>
                                 <input class="form-control {{#usernameError}}is-invalid{{/usernameError}}{{^usernameError}} {{/usernameError}}"
                                        type="text" name="username" {{#newUser.getUsername}}value="{{newUser.getUsername}}"{{/newUser.getUsername}}
                                     {{^newUser.getUsername}}{{/newUser.getUsername}}/>
@@ -19,11 +20,9 @@
                                         {{usernameError}}
                                     </div>
                                 {{/usernameError}}
-                            </label>
-
                         </div>
                         <div>
-                            <label> Пароль:<br>
+                            <label> Пароль:</label>
                                 <input class="form-control {{#passwordError}}is-invalid{{/passwordError}}{{^passwordError}} {{/passwordError}}"
                                        type="password" name="password"/>
                                 {{#passwordError}}
@@ -31,10 +30,9 @@
                                         {{passwordError}}
                                     </div>
                                 {{/passwordError}}
-                            </label>
                         </div>
                         <div>
-                            <label> Повторите пароль:<br>
+                            <label> Повторите пароль:</label>
                                 <input class="form-control {{#password2Error}}is-invalid{{/password2Error}}{{^password2Error}} {{/password2Error}}"
                                        type="password" name="password2"/>
                                 {{#password2Error}}
@@ -42,7 +40,6 @@
                                         {{password2Error}}
                                     </div>
                                 {{/password2Error}}
-                            </label>
                         </div>
                     </div>
                     <input type="hidden" name="_csrf" value="{{_csrf.token}}">

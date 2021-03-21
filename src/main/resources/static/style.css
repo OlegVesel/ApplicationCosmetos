@@ -1,7 +1,7 @@
 body {
     color: #113;
-    background: rgb(0 123 255 / 5%);
 
+  background: rgb(0 123 255 / 5%); !important;
 }
 .button{
 color: rgb(0 123 255); !important;

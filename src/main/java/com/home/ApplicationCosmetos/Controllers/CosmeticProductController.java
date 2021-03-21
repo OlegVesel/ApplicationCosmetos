@@ -58,6 +58,7 @@ public class CosmeticProductController {
                 filterCosmetic = cosmeticProductRepo.findByOwner(user);
             }
         }
+
         model.addAttribute("listOfBrands", listOfBrands);
         model.addAttribute("listOfProducts", listOfProducts);
         model.addAttribute("filter_name", filter_name);
