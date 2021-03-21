@@ -8,11 +8,12 @@
 		<version>2.2.2.RELEASE</version>
 	</parent>
 
+	<packaging>jar</packaging>
 
 
 	<groupId>com.home</groupId>
 	<artifactId>ApplicationCosmetos</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>ApplicationCosmetos</name>
 	<description>Demo project for Spring Boot</description>
 

@@ -22,10 +22,12 @@ public interface CosmeticProductRepo extends CrudRepository<CosmeticProduct, Lon
 
     List<CosmeticProduct> findByBrand(String brand);
 
-    @Query(value = "select distinct trim(cp.name) from cosmetic_product cp where cp.userid = ?1", nativeQuery = true)
+    @Query(value = "select distinct trim(cp.name) as name from cosmetic_product cp" +
+            " where cp.userid = ?1 order by name", nativeQuery = true)
     Iterable<String> distinctName(Long id);
 
-    @Query(value = "select distinct trim(cp.brand) from cosmetic_product cp where cp.userid = ?1", nativeQuery = true)
+    @Query(value = "select distinct trim(cp.brand) as brand from cosmetic_product cp " +
+            "where cp.userid = ?1 order by brand", nativeQuery = true)
     Iterable<String> distinctBrand(Long id);
 
 }
