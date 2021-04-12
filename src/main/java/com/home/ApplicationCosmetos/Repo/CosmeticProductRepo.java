@@ -2,6 +2,8 @@ package com.home.ApplicationCosmetos.Repo;
 
 import com.home.ApplicationCosmetos.Model.CosmeticProduct;
 import com.home.ApplicationCosmetos.Model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -14,7 +16,7 @@ public interface CosmeticProductRepo extends CrudRepository<CosmeticProduct, Lon
 
     List<CosmeticProduct> findByBrandAndOwner(String brand, User owner);
 
-    List<CosmeticProduct> findByOwner(User owner);
+    Page<CosmeticProduct> findByOwner(User owner, Pageable pageable);
 
     List<CosmeticProduct> findByNameLikeAndBrandLike(String name, String brand);
 
