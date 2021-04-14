@@ -10,19 +10,14 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface CosmeticProductRepo extends CrudRepository<CosmeticProduct, Long> {
-    List<CosmeticProduct> findByNameAndBrandAndOwner(String name, String brand, User owner);
+    Page<CosmeticProduct> findByNameAndBrandAndOwner(String name, String brand, User owner, Pageable pageable);
 
-    List<CosmeticProduct> findByNameAndOwner(String name, User owner);
+    Page<CosmeticProduct> findByNameAndOwner(String name, User owner, Pageable pageable);
 
-    List<CosmeticProduct> findByBrandAndOwner(String brand, User owner);
+    Page<CosmeticProduct> findByBrandAndOwner(String brand, User owner, Pageable pageable);
 
     Page<CosmeticProduct> findByOwner(User owner, Pageable pageable);
 
-    List<CosmeticProduct> findByNameLikeAndBrandLike(String name, String brand);
-
-    List<CosmeticProduct> findByName(String name);
-
-    List<CosmeticProduct> findByBrand(String brand);
 
     @Query(value = "select distinct trim(cp.name) as name from cosmetic_product cp" +
             " where cp.userid = ?1 order by name", nativeQuery = true)

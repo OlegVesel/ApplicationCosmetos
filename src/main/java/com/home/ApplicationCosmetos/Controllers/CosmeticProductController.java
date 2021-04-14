@@ -43,23 +43,25 @@ public class CosmeticProductController {
         listOfProducts = cosmeticProductRepo.distinctName(user.getId());
         listOfBrands = cosmeticProductRepo.distinctBrand(user.getId());
         if (!filter_name.isEmpty() & !filter_brand.isEmpty()) {
-            filterCosmetic = cosmeticProductRepo.findByNameAndBrandAndOwner(filter_name, filter_brand, user);
+            page = cosmeticProductRepo.findByNameAndBrandAndOwner(filter_name, filter_brand, user, pageable);
         } else if (!filter_name.isEmpty() & filter_brand.isEmpty()) {
-            filterCosmetic = cosmeticProductRepo.findByNameAndOwner(filter_name, user);
+            page = cosmeticProductRepo.findByNameAndOwner(filter_name, user, pageable);
         } else if (!filter_brand.isEmpty()) {
-            filterCosmetic = cosmeticProductRepo.findByBrandAndOwner(filter_brand, user);
+            page = cosmeticProductRepo.findByBrandAndOwner(filter_brand, user, pageable);
         } else {
             page = cosmeticProductRepo.findByOwner(user, pageable);
         }
 
 
-        model.addAttribute("listOfBrands", listOfBrands);
-        model.addAttribute("listOfProducts", listOfProducts);
-        model.addAttribute("filter_name", filter_name);
-        model.addAttribute("filter_brand", filter_brand);
-        model.addAttribute("allCosmetic", page);
-        model.addAttribute("user", user);
-        model.addAttribute("url", "/app");
+        model.addAttribute("listOfBrands", listOfBrands);       //список брендов для выпадающего списка
+        model.addAttribute("listOfProducts", listOfProducts);   //список средств для выпадающего списка
+        model.addAttribute("filter_name", filter_name);         // фильтр по средству для отображения
+        model.addAttribute("filter_brand", filter_brand);       // фильтр по бренду
+        model.addAttribute("allCosmetic", page);                //полный список продуктов, разбитый по страницам
+        model.addAttribute("user", user);                       //авторизованный пользователь
+        model.addAttribute("url", "/app");                   //url на котороый делается запрос для изменения отображаемых страниц
+        if (page!=null)
+            model.addAttribute("pageList",getArrayPage(page.getTotalPages()));
         return "CosmeticProduct";
     }
 
@@ -100,6 +102,15 @@ public class CosmeticProductController {
         model.addAttribute("user", user);
 
         return "CosmeticProduct";
+    }
+
+    public Integer[] getArrayPage(int maxPage){
+       Integer[] arr = new Integer[maxPage];
+       int count=1;
+       for (int i = 0; i < maxPage; i++){
+           arr[i] = count++;
+       }
+       return arr;
     }
 
 }

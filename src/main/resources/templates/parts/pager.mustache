@@ -1,13 +1,32 @@
-<nav aria-label="...">
+<nav aria-label="Page navigation">
     <ul class="pagination">
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Страницы</a>
+        <li class="page-item">
+            <a class="page-link" href="#" >
+                <span aria-hidden="true"><i class="fas fa-arrow-left"></i></span>
+            </a>
         </li>
 
-        {{#allCosmetic.getTotalPages}}
-        <li class="page-item active" aria-current="page">
-            <a class="page-link" href="{{url}}?page={{.}}">{{.}}</a>
+        {{#pageList}}
+        <li class="page-item" aria-current="page">
+            <a class="page-link" href="{{url}}?page={{.}}">
+                {{.}}
+            </a>
         </li>
-        {{/allCosmetic.getTotalPages}}
+        {{/pageList}}
+
+        <li class="page-item">
+            <a class="page-link" href="#" onclick="nextPage()" >
+                <span aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+
+            </a>
+        </li>
     </ul>
 </nav>
+
+<script>
+    function nextPage(){
+        console.log()
+    }
+</script>
+
+
