@@ -1,11 +1,11 @@
 package com.home.ApplicationCosmetos.Controllers;
 
 import com.home.ApplicationCosmetos.Model.CosmeticProduct;
-import com.home.ApplicationCosmetos.Model.Role;
 import com.home.ApplicationCosmetos.Model.User;
 import com.home.ApplicationCosmetos.Repo.CosmeticProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -28,40 +28,41 @@ public class CosmeticProductController {
     private CosmeticProductRepo cosmeticProductRepo;
 
     @GetMapping("/app")
-    public String viewCosmeticProduct(@AuthenticationPrincipal User user,
+    public String  viewCosmeticProduct(@AuthenticationPrincipal User user,
                                       @RequestParam(required = false, defaultValue = "") String filter_name,
                                       @RequestParam(required = false, defaultValue = "") String filter_brand,
                                       Model model,
-                                      @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+                                      @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size = 15) Pageable pageable) {
 
-        Iterable<CosmeticProduct> filterCosmetic;  //отфильтрованный список средств, которые принадлежат пользователю
+        Page<CosmeticProduct> filterCosmetic;  //отфильтрованный список средств, которые принадлежат пользователю
         Iterable<String> listOfProducts;    //список названий средств
         Iterable<String> listOfBrands;  //список названий брендов
-        Page<CosmeticProduct> page = null;
+        Page<CosmeticProduct> pageWithCosmetic = null;
 
 
         listOfProducts = cosmeticProductRepo.distinctName(user.getId());
         listOfBrands = cosmeticProductRepo.distinctBrand(user.getId());
         if (!filter_name.isEmpty() & !filter_brand.isEmpty()) {
-            page = cosmeticProductRepo.findByNameAndBrandAndOwner(filter_name, filter_brand, user, pageable);
+            pageWithCosmetic = cosmeticProductRepo.findByNameAndBrandAndOwner(filter_name, filter_brand, user, pageable);
         } else if (!filter_name.isEmpty() & filter_brand.isEmpty()) {
-            page = cosmeticProductRepo.findByNameAndOwner(filter_name, user, pageable);
+            pageWithCosmetic = cosmeticProductRepo.findByNameAndOwner(filter_name, user, pageable);
         } else if (!filter_brand.isEmpty()) {
-            page = cosmeticProductRepo.findByBrandAndOwner(filter_brand, user, pageable);
+            pageWithCosmetic = cosmeticProductRepo.findByBrandAndOwner(filter_brand, user, pageable);
         } else {
-            page = cosmeticProductRepo.findByOwner(user, pageable);
+            pageWithCosmetic = cosmeticProductRepo.findByOwner(user, pageable);
         }
+
 
 
         model.addAttribute("listOfBrands", listOfBrands);       //список брендов для выпадающего списка
         model.addAttribute("listOfProducts", listOfProducts);   //список средств для выпадающего списка
         model.addAttribute("filter_name", filter_name);         // фильтр по средству для отображения
         model.addAttribute("filter_brand", filter_brand);       // фильтр по бренду
-        model.addAttribute("allCosmetic", page);                //полный список продуктов, разбитый по страницам
+        model.addAttribute("allCosmetic", pageWithCosmetic);    //полный список продуктов, разбитый по страницам
         model.addAttribute("user", user);                       //авторизованный пользователь
         model.addAttribute("url", "/app");                   //url на котороый делается запрос для изменения отображаемых страниц
-        if (page!=null)
-            model.addAttribute("pageList",getArrayPage(page.getTotalPages()));
+        if (pageWithCosmetic!=null)
+            model.addAttribute("pageList",getArrayPage(pageWithCosmetic.getTotalPages()));
         return "CosmeticProduct";
     }
 
@@ -93,13 +94,15 @@ public class CosmeticProductController {
             cosmeticProductRepo.save(cosmeticProduct);
         }
 
-        Iterable<CosmeticProduct> allCosmetic;
-        if (user.getRoles().contains(Role.ADMIN)) allCosmetic = cosmeticProductRepo.findAll();
-        else allCosmetic = cosmeticProductRepo.findByOwner(user, pageable);
+        Page<CosmeticProduct> pageWithCosmetic;
+        pageWithCosmetic = cosmeticProductRepo.findByOwner(user, pageable);
         model.addAttribute("listOfBrands", cosmeticProductRepo.distinctBrand(user.getId()));
         model.addAttribute("listOfProducts", cosmeticProductRepo.distinctName(user.getId()));
-        model.addAttribute("allCosmetic", allCosmetic);
+        model.addAttribute("allCosmetic", pageWithCosmetic);
         model.addAttribute("user", user);
+        model.addAttribute("url", "/app");
+        if (pageWithCosmetic!=null)
+            model.addAttribute("pageList",getArrayPage(pageWithCosmetic.getTotalPages()));
 
         return "CosmeticProduct";
     }
@@ -110,6 +113,7 @@ public class CosmeticProductController {
        for (int i = 0; i < maxPage; i++){
            arr[i] = count++;
        }
+
        return arr;
     }
 

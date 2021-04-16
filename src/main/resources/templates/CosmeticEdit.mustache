@@ -55,7 +55,12 @@
                     <input class="form-control my-2" type="date" name="autopsy_date"
                            {{#autopsy_date}}value="{{autopsy_date}}"{{/autopsy_date}}
                            placeholder="Введите дату вскрытия"/>
-                    <textarea class="form-control {{#noteError}}is-invalid{{/noteError}}{{^noteError}} {{/noteError}} my-2" name="note" placeholder="Примечание"></textarea>
+
+
+                    <input class="form-control {{#noteError}}is-invalid{{/noteError}}{{^noteError}} {{/noteError}} mb-2"
+                           name="note" placeholder="Примечание"
+                           {{#cosmeticProduct.getNote}}value="{{cosmeticProduct.getNote}}"{{/cosmeticProduct.getNote}}
+                        {{^cosmeticProduct.getNote}}{{/cosmeticProduct.getNote}}/>
                     {{#noteError}}
                         <div class="invalid-feedback">
                             {{noteError}}
