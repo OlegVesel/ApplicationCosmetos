@@ -3,7 +3,7 @@
 
     <div class="col-6 text-center mb-5"><button class="btn btn-outline-primary btn-block"
                                                 onclick="seeMore({{allCosmetic.getSize}}, {{allCosmetic.getTotalElements}})"
-                                                id="showMoreBtn">Показать еще   <i class="fas fa-arrow-down"></i></button></div>
+                                                id="showMoreBtn">Показать еще 10  <i class="fas fa-arrow-down"></i></button></div>
 
     <div class="col-3"></div>
 </div>
@@ -14,7 +14,7 @@
 <script type="text/javascript">
 //скрипт который опускается вниз страницы после обновления
     document.addEventListener("DOMContentLoaded", function(event) {
-           console.log(document.body.scrollHeight)
+
            if (localStorage.getItem('height') != null){
                 window.scrollTo(0, localStorage.getItem('height'))
                 localStorage.removeItem('height')
@@ -31,12 +31,9 @@
         if(currentSize > maxSize){
             document.getElementById("showMoreBtn").innerText="Больше ничего нет"
             document.getElementById("showMoreBtn").classList.add('disabled')
-
         } else {
-
-           localStorage.setItem('height', document.body.scrollHeight)
+           localStorage.setItem('height', pageYOffset) //запоминает текущие координаты по оси Y чтобы прокрутить страницу на это же место
            location.href = newUrl
-
         }
  }
 

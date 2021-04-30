@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.Map;
@@ -19,11 +20,13 @@ import java.util.Map;
 @Controller
 @RequestMapping("/app")
 public class CosmeticEditController {
+    private String url=""; //хранится url страницы с косметикой для сохранения всех фильтров при переходе туда
     @Autowired
     private CosmeticProductRepo cosmeticProductRepo;
 
     @GetMapping("edit/{cosmeticProduct}")
-    public String viewCosmeticEdit(@AuthenticationPrincipal User user, @PathVariable CosmeticProduct cosmeticProduct, Model model) {
+    public String viewCosmeticEdit(@AuthenticationPrincipal User user, @PathVariable CosmeticProduct cosmeticProduct, Model model,HttpServletRequest request) {
+        url = request.getHeader("Referer");
         model.addAttribute("listOfProducts", cosmeticProductRepo.distinctName(user.getId()));
         model.addAttribute("listOfBrands", cosmeticProductRepo.distinctBrand(user.getId()));
         model.addAttribute("cosmeticProduct", cosmeticProduct);
@@ -35,7 +38,8 @@ public class CosmeticEditController {
     public String editCosmeticProduct(@AuthenticationPrincipal User user,
                                       @Valid CosmeticProduct editCosmeticProduct,
                                       BindingResult bindingResult,
-                                      Model model) {
+                                      Model model
+                                      ) {
 
         LocalDate date_death;
         if (editCosmeticProduct.getAutopsy_date()!=null && editCosmeticProduct.getAutopsy_date()
@@ -57,7 +61,7 @@ public class CosmeticEditController {
         else {
             model.addAttribute("editCosmeticProduct", null);
             cosmeticProductRepo.save(editCosmeticProduct);
-            return "redirect:/app";
+            return "redirect:"+url;
         }
         model.addAttribute("listOfProducts", cosmeticProductRepo.distinctName(user.getId()));
         model.addAttribute("listOfBrands", cosmeticProductRepo.distinctBrand(user.getId()));
@@ -67,14 +71,16 @@ public class CosmeticEditController {
 
     //метод удаления записи со средством из БД, из шаблона CosmeticProduct  по нажатию на кнопку
     @PostMapping("/delete/{id}")
-    public String deleteCosmeticProduct(@PathVariable Long id, Model model) {
+    public String deleteCosmeticProduct(@PathVariable Long id, HttpServletRequest request) {
         cosmeticProductRepo.deleteById(id);
-        return "redirect:/app";
+
+
+        return "redirect:"+request.getHeader("Referer");
     }
 
     //метод для копирования полностью, выбранного средства
     @PostMapping("/copy/{id}")
-    public String copyCosmeticProduct(@AuthenticationPrincipal User user, @PathVariable Long id, Model model) {
+    public String copyCosmeticProduct(@AuthenticationPrincipal User user, @PathVariable Long id, HttpServletRequest request) {
         CosmeticProduct currentCosPr = null;
         boolean is_open = false;
         if (cosmeticProductRepo.findById(id).isPresent()) currentCosPr = cosmeticProductRepo.findById(id).get();
@@ -83,6 +89,6 @@ public class CosmeticEditController {
                 currentCosPr.getShelf_life(), currentCosPr.getAutopsy_date(), currentCosPr.getNote(), currentCosPr.getDate_death(), user);
 
         cosmeticProductRepo.save(newCosPr);
-        return "redirect:/app";
+        return "redirect:"+request.getHeader("Referer");
     }
 }
