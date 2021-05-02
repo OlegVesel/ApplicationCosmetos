@@ -1,37 +1,31 @@
 {{>parts/logRegTemplate}}
 
+<h3 class="header text-center mb-5">Добро пожаловать</h3>
+        <div class="card cloudyGlass">
+            <div class="card-header">
 
-<div class="row">
-    <div class="col-4">
-
-    </div>
-    <div class="col text-center" >
-        <h3 class="header text-center mb-5">Добро пожаловать</h3>
-        <div class="card border" style="border: 2px solid !important;">
-            <div class="card-body">
-                <form action="/login" method="post">
-                    <div class="form-group">
+            </div>
+            <div class="card-body content">
+                <form action="/login" method="post" >
+                    <div class="form-group ">
                         <div>
                             <label> Имя пользователя:</label>
-                                <input class="form-control" type="text" name="username"/>
-
+                            <input class="form-control" type="text" name="username"/>
                         </div>
                         <div>
                             <label> Пароль:</label>
-                                <input class="form-control" type="password" name="password"/>
-
+                            <input class="form-control" type="password" name="password"/>
                         </div>
                     </div>
                     <input type="hidden" name="_csrf" value="{{_csrf.token}}">
-                    <div><input class="btn btn-primary btn-block" type="submit" value="Войти"/></div>
+                    <div>
+                        <input class="btn btn-primary btn-block" type="submit" value="Войти" />
+                    </div>
                 </form>
                 <a href="/registration" class="btn btn-light btn-block mt-2">Регистрация</a>
 
             </div>
         </div>
-    </div>
-    <div class="col-4">
 
-    </div>
-</div>
+
 {{>parts/foot}}
