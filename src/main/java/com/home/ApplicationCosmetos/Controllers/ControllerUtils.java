@@ -1,8 +1,10 @@
 package com.home.ApplicationCosmetos.Controllers;
 
+import com.home.ApplicationCosmetos.Model.CosmeticProduct;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -14,5 +16,15 @@ public class ControllerUtils {
                 FieldError::getDefaultMessage
         );
         return bindingResult.getFieldErrors().stream().collect(collector);
+    }
+
+    static LocalDate getDateDeath(int timeAfterOpenning, LocalDate autopsyDate, LocalDate shelfLife){
+        LocalDate dateDeath;
+        if (timeAfterOpenning != 0 && autopsyDate != null &&
+                (autopsyDate.plusMonths(timeAfterOpenning)).isBefore(shelfLife))
+            dateDeath = autopsyDate
+                    .plusMonths(timeAfterOpenning);
+        else dateDeath = shelfLife;
+        return dateDeath;
     }
 }

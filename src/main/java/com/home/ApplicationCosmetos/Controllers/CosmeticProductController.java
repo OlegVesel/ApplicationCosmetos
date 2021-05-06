@@ -72,16 +72,12 @@ public class CosmeticProductController {
                                      Model model,
                                      @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
 
-        LocalDate date_death;
-        if (cosmeticProduct.getAutopsy_date() != null && cosmeticProduct.getAutopsy_date()
-                .plusMonths(cosmeticProduct.getTime_after_opening())
-                .isBefore(cosmeticProduct.getShelf_life()))
-            date_death = cosmeticProduct.getAutopsy_date()
-                    .plusMonths(cosmeticProduct.getTime_after_opening());
-        else date_death = cosmeticProduct.getShelf_life();
+        LocalDate dateDeath =
+                ControllerUtils.getDateDeath(cosmeticProduct.getTime_after_opening(), cosmeticProduct.getAutopsyDate(), cosmeticProduct.getShelfLife());
+
 
         cosmeticProduct.setOwner(user);
-        cosmeticProduct.setDate_death(date_death);
+        cosmeticProduct.setDateDeath(dateDeath);
 
         if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
@@ -112,7 +108,6 @@ public class CosmeticProductController {
        for (int i = 0; i < maxPage; i++){
            arr[i] = count++;
        }
-
        return arr;
     }
 

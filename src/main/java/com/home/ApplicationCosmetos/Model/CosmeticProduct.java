@@ -25,33 +25,40 @@ public class CosmeticProduct {
     private int time_after_opening; //срок после вскрытия
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Укажите срок годности")
-    private LocalDate shelf_life; //срок годности
+    private LocalDate shelfLife; //срок годности
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate autopsy_date; // дата вскрытия
+    private LocalDate autopsyDate; // дата вскрытия
     @Size(max = 2048, message = "Примечание не должно быть больше чем 2048 символов")
     private String note; //примечания
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate date_death; //когда испортится
+    private LocalDate dateDeath; //когда испортится
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userid")
     private User owner;
 
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dateCreate; //дата добавления продукта
+
+
+
     public CosmeticProduct() {
     }
 
     public CosmeticProduct(String name, String brand, String volume, int time_after_opening,
-                           LocalDate shelf_life, LocalDate autopsy_date, String note, LocalDate date_death, User owner) {
+                           LocalDate shelfLife, LocalDate autopsyDate, String note, LocalDate dateDeath, User owner, LocalDate dateCreate) {
 
         this.name = name;
         this.brand = brand;
         this.volume = volume;
         this.time_after_opening = time_after_opening;
-        this.shelf_life = shelf_life;
-        this.autopsy_date = autopsy_date;
+        this.shelfLife = shelfLife;
+        this.autopsyDate = autopsyDate;
         this.note = note;
-        this.date_death = date_death;
+        this.dateDeath = dateDeath;
         this.owner = owner;
+        this.dateCreate = dateCreate;
     }
 
 
@@ -99,20 +106,20 @@ public class CosmeticProduct {
         this.time_after_opening = time_after_opening;
     }
 
-    public LocalDate getShelf_life() {
-        return shelf_life;
+    public LocalDate getShelfLife() {
+        return shelfLife;
     }
 
-    public void setShelf_life(LocalDate shelf_life) {
-        this.shelf_life = shelf_life;
+    public void setShelfLife(LocalDate shelfLife) {
+        this.shelfLife = shelfLife;
     }
 
-    public LocalDate getAutopsy_date() {
-        return autopsy_date;
+    public LocalDate getAutopsyDate() {
+        return autopsyDate;
     }
 
-    public void setAutopsy_date(LocalDate autopsy_date) {
-        this.autopsy_date = autopsy_date;
+    public void setAutopsyDate(LocalDate autopsyDate) {
+        this.autopsyDate = autopsyDate;
     }
 
     public String getNote() {
@@ -123,12 +130,12 @@ public class CosmeticProduct {
         this.note = note;
     }
 
-    public LocalDate getDate_death() {
-        return date_death;
+    public LocalDate getDateDeath() {
+        return dateDeath;
     }
 
-    public void setDate_death(LocalDate date_death) {
-        this.date_death = date_death;
+    public void setDateDeath(LocalDate dateDeath) {
+        this.dateDeath = dateDeath;
     }
 
     public User getOwner() {
@@ -139,6 +146,13 @@ public class CosmeticProduct {
         this.owner = owner;
     }
 
+    public LocalDate getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(LocalDate dateCreate) {
+        this.dateCreate = dateCreate;
+    }
     @Override
     public String toString() {
         return "CosmeticProduct{" +
@@ -147,10 +161,10 @@ public class CosmeticProduct {
                 ", brand='" + brand + '\'' +
                 ", volume='" + volume + '\'' +
                 ", time_after_opening=" + time_after_opening +
-                ", shelf_life=" + shelf_life +
-                ", autopsy_date=" + autopsy_date +
+                ", shelf_life=" + shelfLife +
+                ", autopsy_date=" + autopsyDate +
                 ", note='" + note + '\'' +
-                ", date_death=" + date_death + '\'' +
+                ", date_death=" + dateDeath + '\'' +
                 '}';
     }
 }

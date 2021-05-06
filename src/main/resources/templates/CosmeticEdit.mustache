@@ -42,18 +42,18 @@
                             <p>Укажите срок после вскрытия, если его нет поставьте 0 </p>
                         </div>
                     {{/time_after_openingError}}
-                    <input class="form-control {{#shelf_lifeError}}is-invalid{{/shelf_lifeError}}{{^shelf_lifeError}} {{/shelf_lifeError}} my-2"
-                           type="date" name="shelf_life"
-                           {{#editCosmeticProduct.getShelf_life}}value="{{shelf_life}}"{{/editCosmeticProduct.getShelf_life}}
-                           {{^editCosmeticProduct.getShelf_life}}value="{{cosmeticProduct.getShelf_life}}"{{/editCosmeticProduct.getShelf_life}}
+                    <input class="form-control {{#shelfLifeError}}is-invalid{{/shelfLifeError}}{{^shelfLifeError}} {{/shelfLifeError}} my-2"
+                           type="date" name="shelfLife"
+                           {{#editCosmeticProduct.getShelfLife}}value="{{shelfLife}}"{{/editCosmeticProduct.getShelfLife}}
+                           {{^editCosmeticProduct.getShelfLife}}value="{{cosmeticProduct.getShelfLife}}"{{/editCosmeticProduct.getShelfLife}}
                            placeholder="Введите срок годности"/>
-                    {{#shelf_lifeError}}
+                    {{#shelfLifeError}}
                         <div class="invalid-feedback">
-                            {{shelf_lifeError}}
+                            {{shelfLifeError}}
                         </div>
-                    {{/shelf_lifeError}}
-                    <input class="form-control my-2" type="date" name="autopsy_date"
-                           {{#autopsy_date}}value="{{autopsy_date}}"{{/autopsy_date}}
+                    {{/shelfLifeError}}
+                    <input class="form-control my-2" type="date" name="autopsyDate"
+                           {{#autopsyDate}}value="{{autopsyDate}}"{{/autopsyDate}}
                            placeholder="Введите дату вскрытия"/>
 
 

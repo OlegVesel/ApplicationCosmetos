@@ -4,11 +4,9 @@ import com.home.ApplicationCosmetos.Model.CosmeticProduct;
 import com.home.ApplicationCosmetos.Model.User;
 import com.home.ApplicationCosmetos.Repo.CosmeticProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,15 +39,11 @@ public class CosmeticEditController {
                                       Model model
                                       ) {
 
-        LocalDate date_death;
-        if (editCosmeticProduct.getAutopsy_date()!=null && editCosmeticProduct.getAutopsy_date()
-                .plusMonths(editCosmeticProduct.getTime_after_opening())
-                .isBefore(editCosmeticProduct.getShelf_life()))
-            date_death = editCosmeticProduct.getAutopsy_date()
-                    .plusMonths(editCosmeticProduct.getTime_after_opening());
-        else date_death = editCosmeticProduct.getShelf_life();
+        LocalDate dateDeath =
+                ControllerUtils.getDateDeath(editCosmeticProduct.getTime_after_opening(), editCosmeticProduct.getAutopsyDate(), editCosmeticProduct.getShelfLife());
 
-        editCosmeticProduct.setDate_death(date_death);
+
+        editCosmeticProduct.setDateDeath(dateDeath);
         editCosmeticProduct.setOwner(user);
 
 
@@ -74,7 +68,6 @@ public class CosmeticEditController {
     public String deleteCosmeticProduct(@PathVariable Long id, HttpServletRequest request) {
         cosmeticProductRepo.deleteById(id);
 
-
         return "redirect:"+request.getHeader("Referer");
     }
 
@@ -85,8 +78,10 @@ public class CosmeticEditController {
         boolean is_open = false;
         if (cosmeticProductRepo.findById(id).isPresent()) currentCosPr = cosmeticProductRepo.findById(id).get();
 
-        CosmeticProduct newCosPr = new CosmeticProduct(currentCosPr.getName(), currentCosPr.getBrand(), currentCosPr.getVolume(), currentCosPr.getTime_after_opening(),
-                currentCosPr.getShelf_life(), currentCosPr.getAutopsy_date(), currentCosPr.getNote(), currentCosPr.getDate_death(), user);
+        CosmeticProduct newCosPr = new CosmeticProduct(currentCosPr.getName(), currentCosPr.getBrand(),
+                currentCosPr.getVolume(), currentCosPr.getTime_after_opening(),
+                currentCosPr.getShelfLife(), currentCosPr.getAutopsyDate(),
+                currentCosPr.getNote(), currentCosPr.getDateDeath(), user, currentCosPr.getDateCreate());
 
         cosmeticProductRepo.save(newCosPr);
         return "redirect:"+request.getHeader("Referer");
