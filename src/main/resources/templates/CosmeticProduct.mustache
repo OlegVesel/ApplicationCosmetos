@@ -208,16 +208,16 @@
                         <!--кнопка копирования средства -->
                         <form action="/app/copy/{{id}}" method="post">
                             <input type="hidden" name="_csrf" value="{{_csrf.token}}">
-                            <button class="btn far fa-clone"></button>
+                            <button class="btn far fa-clone" id="copyBtn"></button>
                         </form>
                         <!--кнопка перехода в окно обновления средства -->
                         <form action="/app/edit/{{id}}" method="get">
-                            <button class="btn  fas fa-pencil-alt" type="submit"></button>
+                            <button class="btn  fas fa-pencil-alt" id="editBtn" type="submit"></button>
                         </form>
                         <!--кнопка удаления средства -->
                         <form action="/app/delete/{{id}}" method="post">
                             <input type="hidden" name="_csrf" value="{{_csrf.token}}">
-                            <button class="btn  fas fa-trash" type="submit"></button>
+                            <button class="btn  fas fa-trash" id="delBtn" type="submit"></button>
                         </form>
 
                     </div>

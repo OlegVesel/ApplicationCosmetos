@@ -1,41 +1,21 @@
-<div class="row">
-    <div class="col-3"></div>
+<div class="row" id="pagerRow">
 
-    <div class="col-6 text-center mb-5"><button class="btn btn-outline-primary btn-block"
-                                                onclick="seeMore({{allCosmetic.getSize}}, {{allCosmetic.getTotalElements}})"
-                                                id="showMoreBtn">Показать еще 10  <i class="fas fa-arrow-down"></i></button></div>
+        <button class="btn btn-outline-primary btn-block pagePlusBtn plus10"
+                                                onclick="seeMore(10, {{allCosmetic.getSize}}, {{allCosmetic.getTotalElements}})"
+                                                id="showMoreBtn">
+            Показать еще 10  <i class="fas fa-arrow-down"></i>
+        </button>
+        <button class="btn btn-outline-primary pagePlusBtn plus15"
+                onclick="seeMore(15, {{allCosmetic.getSize}}, {{allCosmetic.getTotalElements}})">+15</button>
+        <button class="btn btn-outline-primary pagePlusBtn plus25"
+                onclick="seeMore(25, {{allCosmetic.getSize}}, {{allCosmetic.getTotalElements}})">+25</button>
+         <button class="btn btn-outline-primary pagePlusBtn plusAll"
+                onclick="seeMore(9999, {{allCosmetic.getSize}}, {{allCosmetic.getTotalElements}})">Всё</button>
 
-    <div class="col-3"></div>
 </div>
 
 
-
-
-<script type="text/javascript">
-//скрипт который опускается вниз страницы после обновления
-    document.addEventListener("DOMContentLoaded", function(event) {
-
-           if (localStorage.getItem('height') != null){
-                window.scrollTo(0, localStorage.getItem('height'))
-                localStorage.removeItem('height')
-           }
-
-    });
-//скрипт для увеличения числа элементов отображаемых на странице
-    function seeMore(currentSize, maxSize){
-        let url = window.location.href  //получаем текущую ссылку
-
-        let newSize = currentSize+10
-        let newUrl = url.slice(0,24)+"?size="+newSize
-
-        if(currentSize > maxSize){
-            document.getElementById("showMoreBtn").innerText="Больше ничего нет"
-            document.getElementById("showMoreBtn").classList.add('disabled')
-        } else {
-           localStorage.setItem('height', pageYOffset) //запоминает текущие координаты по оси Y чтобы прокрутить страницу на это же место
-           location.href = newUrl
-        }
- }
+<script type="text/javascript" src="/static/scripts/pagerScript.js">
 
 </script>
 

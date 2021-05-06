@@ -1,0 +1,30 @@
+#pagerRow{
+    justify-content:center;
+    padding:10px;
+}
+.pagePlusBtn{
+    position:absolute;
+}
+#pagerRow .plus10{
+    width:300px;
+}
+.plus15, .plus25, .plusAll{
+    width:50px;
+    z-index:-1;
+    transition: 1s;
+    opacity:0;
+}
+
+#pagerRow:hover  .plus15{
+    opacity: 1;
+    transform: translateX(175px);
+}
+#pagerRow:hover  .plus25{
+    opacity: 1;
+    transform: translateX(225px);
+}
+
+#pagerRow:hover  .plusAll{
+    opacity: 1;
+    transform: translateX(275px);
+}

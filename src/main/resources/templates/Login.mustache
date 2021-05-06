@@ -2,28 +2,21 @@
 
 <h3 class="header text-center mb-5">Добро пожаловать</h3>
         <div class="card cloudyGlass">
-            <div class="card-header">
 
-            </div>
             <div class="card-body content">
-                <form action="/login" method="post" >
-                    <div class="form-group ">
-                        <div>
-                            <label> Имя пользователя:</label>
-                            <input class="form-control" type="text" name="username"/>
-                        </div>
-                        <div>
-                            <label> Пароль:</label>
-                            <input class="form-control" type="password" name="password"/>
-                        </div>
-                    </div>
-                    <input type="hidden" name="_csrf" value="{{_csrf.token}}">
-                    <div>
+                <form action="/login" method="post">
+                    <label> Имя пользователя:</label>
+                    <input class="form-control mb-3" type="text" name="username" />
+
+                    <label> Пароль:</label>
+                    <input class="form-control" type="password" name="password"/>
+
+                    <div class="logBtn">
+                        <input type="hidden" name="_csrf" value="{{_csrf.token}}">
                         <input class="btn btn-primary btn-block" type="submit" value="Войти" />
+                        <a href="/registration" class="btn btn-light btn-block mt-2">Регистрация</a>
                     </div>
                 </form>
-                <a href="/registration" class="btn btn-light btn-block mt-2">Регистрация</a>
-
             </div>
         </div>
 

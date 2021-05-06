@@ -5,15 +5,12 @@ body {
     font-family: 'Merriweather';
     background: rgb(0 123 255 / 5%); !important;
 }
-.button{
-    color: rgb(0 123 255); !important;
-}
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: rgb(0 123 255 / 5%); !important;
-}
+
 /* стили для таблицы отображения средств*/
-table {
+#table_product {
     width: 100%; /* Ширина таблицы в процентах */
+    border: 2px solid  rgb(110,168,254);/*linear-gradient(rgb(110,168,254), rgb(163 112 247));*/
+
    }
    .col1 {
     width: 11%; /* Средство */
@@ -42,6 +39,28 @@ table {
    .col9 {
        width: 11%; /*Действие */
       }
+
+#table_product thead tr th{
+    border: 2px solid rgb(110,168,254);
+}
 .card-body{
     background-color : rgb(0 123 255 / 5%) !important;
 }
+
+#copyBtn, #delBtn, #editBtn{
+    background: none;
+    transition: 0.5s;
+}
+#copyBtn:hover{
+    transform: scale(1.3);
+    color:blue;
+}
+#delBtn:hover{
+    transform: scale(1.3);
+    color:red;
+}
+#editBtn:hover{
+    transform: scale(1.3);
+    color:green;
+}
+
