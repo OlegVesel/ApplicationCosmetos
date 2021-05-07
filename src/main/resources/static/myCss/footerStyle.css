@@ -1,0 +1,20 @@
+.mainFooter{
+    background: rgb(52 58 64);
+    color: white;
+    height: 100px;
+    text-align: right;
+}
+
+.mainFooter .divFeedback {
+  display: inline-block; /* inline-block занимает ширину содержимого, max-width её ограничивает */
+  text-align: start; /* убрать наследование text-align */
+  margin: 10px 50px 10px 10px; /* top right bottom left*/
+}
+.mainFooter .divFeedback .feedbackBtn{
+    border: 2px solid white;
+    border-radius: 10px;
+}
+.mainFooter .divFeedback #googleBtn:hover{
+    color:red;
+}
+
