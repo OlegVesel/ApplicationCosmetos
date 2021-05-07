@@ -3,7 +3,10 @@
 body {
     color: #113;
     font-family: 'Merriweather';
-    background: rgb(0 123 255 / 5%); !important;
+    /*background: rgb(0 123 255 / 5%); !important;*/
+    background: url('../../image/fon2');
+
+
 }
 
 /* стили для таблицы отображения средств*/
