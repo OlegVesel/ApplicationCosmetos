@@ -9,9 +9,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 
 import java.util.Collections;
+import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -19,25 +21,46 @@ public class UserService implements UserDetailsService {
     private UserRepo userRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private MailSender mailSender;
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException{
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 
-            return userRepo.findByUsername(s);
+        return userRepo.findByUsername(s);
     }
 
-    public boolean addUser(User user){
+    public boolean addUser(User user) {
         User userFromDB = userRepo.findByUsername(user.getUsername());
 
-        if(userFromDB!=null) {
+        if (userFromDB != null) {
             return false;
         }
 
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setActivationCode(UUID.randomUUID().toString());
+
         userRepo.save(user);
 
+        if (StringUtils.hasLength(user.getEmail()) && StringUtils.hasText(user.getEmail())) {
+            String message = String.format("Привет, %s! \n" +
+                    "Для активации своего аккаунта, перейди по ссылке \n " +
+                    "http://192.168.0.104/activate/%s", user.getUsername(), user.getActivationCode());
+            mailSender.sendMail(user.getEmail(), "Активация аккаунта", message);
+        }
+        return true;
+    }
+
+    public boolean activateUser(String activationCode) {
+
+        User user = userRepo.findByActivationCode(activationCode);
+        if (user == null)
+            return false;
+        user.setActivationCode(null);
+        user.setPassword2(user.getPassword());
+        userRepo.save(user);
         return true;
     }
 }

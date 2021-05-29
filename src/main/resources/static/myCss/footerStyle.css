@@ -14,8 +14,8 @@
 .mainFooter .divFeedback .feedbackBtn{
     border: 2px solid white;
     border-radius: 10px;
-}
-.mainFooter .divFeedback #googleBtn:hover{
-    color:red;
-}
 
+}
+.mainFooter .divFeedback .feedbackBtn p{
+    margin: 1px 0 0 15px;
+}

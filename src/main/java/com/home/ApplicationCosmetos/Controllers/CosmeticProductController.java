@@ -27,7 +27,7 @@ public class CosmeticProductController {
     private CosmeticProductRepo cosmeticProductRepo;
 
     @GetMapping("/app")
-    public String  viewCosmeticProduct(@AuthenticationPrincipal User user,
+    public String viewCosmeticProduct(@AuthenticationPrincipal User user,
                                       @RequestParam(required = false, defaultValue = "") String filter_name,
                                       @RequestParam(required = false, defaultValue = "") String filter_brand,
                                       Model model,
@@ -52,7 +52,6 @@ public class CosmeticProductController {
         }
 
 
-
         model.addAttribute("listOfBrands", listOfBrands);       //список брендов для выпадающего списка
         model.addAttribute("listOfProducts", listOfProducts);   //список средств для выпадающего списка
         model.addAttribute("filter_name", filter_name);         // фильтр по средству для отображения
@@ -60,8 +59,6 @@ public class CosmeticProductController {
         model.addAttribute("allCosmetic", pageWithCosmetic);    //полный список продуктов, разбитый по страницам
         model.addAttribute("user", user);                       //авторизованный пользователь
         model.addAttribute("url", "/app");                   //url на котороый делается запрос для изменения отображаемых страниц
-        if (pageWithCosmetic!=null)
-            model.addAttribute("pageList",getArrayPage(pageWithCosmetic.getTotalPages()));
         return "CosmeticProduct";
     }
 
@@ -96,19 +93,8 @@ public class CosmeticProductController {
         model.addAttribute("allCosmetic", pageWithCosmetic);
         model.addAttribute("user", user);
         model.addAttribute("url", "/app");
-        if (pageWithCosmetic!=null)
-            model.addAttribute("pageList",getArrayPage(pageWithCosmetic.getTotalPages()));
 
         return "CosmeticProduct";
-    }
-
-    public Integer[] getArrayPage(int maxPage){
-       Integer[] arr = new Integer[maxPage];
-       int count=1;
-       for (int i = 0; i < maxPage; i++){
-           arr[i] = count++;
-       }
-       return arr;
     }
 
 }

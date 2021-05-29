@@ -64,19 +64,21 @@ public class UserController {
         }
 
         userRepo.save(userEdit);
-        return "redirect:/User";
+        return "redirect:/user";
     }
 
     @PostMapping("{id}")
     public String deleteUser(@AuthenticationPrincipal User user, @PathVariable Long id, Model model){
 
-        Optional<User> message = userRepo.findById(id);
+        User deletedUser = userRepo.findById(id).orElse(null);
         model.addAttribute("user",user);
         model.addAttribute("users", userRepo.findAll());
-        model.addAttribute("message", "Пользователь "+ message.get().getUsername() + " успешно удален!");
+        if (deletedUser!=null)
+            model.addAttribute("message", "Пользователь "+ deletedUser.getUsername() + " успешно удален!");
+        else model.addAttribute("message", "О пользователе нет записей в БД, не получилось удалить");
         userRepo.deleteById(id);
 
-        return "redirect:/User";
+        return "redirect:/user";
 
     }
 }

@@ -1,13 +1,17 @@
 package com.home.ApplicationCosmetos.Model;
 
+import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "user_info")
 public class User implements UserDetails {
@@ -17,12 +21,17 @@ public class User implements UserDetails {
     @NotBlank(message = "Имя пользователя не должно быть пустым")
     private String username;
     @NotBlank(message = "Пароль не должен быть пустым")
+    @Length(min = 6, max = 255, message = "Пароль должен быть не меньше 6 символов")
     private String password;
     @Transient
     @NotBlank(message = "Подтвердите пароль")
     private String password2;
 
     private boolean active;
+
+    private String email;
+
+    private String activationCode;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "User_Role", joinColumns = @JoinColumn(name = "user_id"))
@@ -32,18 +41,6 @@ public class User implements UserDetails {
 
     public boolean isAdmin(){
         return roles.contains(Role.ADMIN);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     @Override
@@ -66,9 +63,6 @@ public class User implements UserDetails {
         return isActive();
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -79,31 +73,4 @@ public class User implements UserDetails {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public String getPassword2() {
-        return password2;
-    }
-
-    public void setPassword2(String password2) {
-        this.password2 = password2;
-    }
 }

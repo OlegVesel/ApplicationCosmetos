@@ -3,7 +3,8 @@
     <div class="divFeedback">
         <h5>Оставайтесь с нами на связи</h5>
         <div class="feedbackBtn">
-            <a class="btn" id="googleBtn" href="https://www.google.com/intl/ru/gmail/about/" target="_blank"><i class="fab fa-google"></i></a>
+            <p>Наша почта:</p>
+            <p>moya.cosmetichka@gmail.com</p>
         </div>
     </div>
 
@@ -21,8 +22,8 @@
 <!--скрипт для затухания всплывающего окна-->
 <script>
     window.setTimeout(function(){
-      $(".alert").fadeTo(500,0).slideUp(1000,function(){
-        $(".alert").slideUp(500);
+      $("#success-alert").fadeTo(500,0).slideUp(1000,function(){
+        $("#success-alert").slideUp(500);
       });
     },1000);
   </script>

@@ -1,5 +1,13 @@
 {{>parts/Head}}
 
+{{#messageActivation}}
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <i class="fas fa-info-circle"></i> <strong>   {{messageActivation}}</strong>
+        <button type="button" class="btn fas fa-times" data-dismiss="alert" aria-label="Close"></button>
+    </div>
+{{/messageActivation}}
+
+
 <h3>Добро пожаловать на домашнюю страницу</h3>
 <h1>Привет, {{user.getUsername}}</h1>
 <div class="row">

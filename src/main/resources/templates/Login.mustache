@@ -1,8 +1,14 @@
 {{>parts/LogRegTemplate}}
 
 <h3 class="header text-center mb-5">Добро пожаловать</h3>
-<div class="card cloudyGlass">
+{{#messageActivation}}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong> {{messageActivation}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{{/messageActivation}}
 
+<div class="card cloudyGlass">
     <div class="card-body content">
         <form action="/login" method="post">
             <div class="logInput">

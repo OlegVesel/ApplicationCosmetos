@@ -2,7 +2,7 @@
 
 
 <h3 class="header text-center mb-5">Регистрация</h3>
-<div class="card cloudyGlass">
+<div class="card cloudyGlass registrCard">
     <div class="card-body content">
         <form action="/registration" method="post">
             <div class="logInput">
@@ -16,6 +16,17 @@
                         {{usernameError}}
                     </div>
                 {{/usernameError}}
+
+                <label> Почта:</label>
+                <input class="form-control {{#emailError}}is-invalid{{/emailError}}{{^emailError}} {{/emailError}}"
+                       type="email" name="email"
+                       {{#newUser.getEmail}}value="{{newUser.getEmail}}"{{/newUser.getEmail}}
+                    {{^newUser.getEmail}}{{/newUser.getEmail}}/>
+                {{#emailError}}
+                    <div class="invalid-feedback">
+                        {{emailError}}
+                    </div>
+                {{/emailError}}
 
                 <label> Пароль:</label>
                 <input class="form-control {{#passwordError}}is-invalid{{/passwordError}}{{^passwordError}} {{/passwordError}}"
