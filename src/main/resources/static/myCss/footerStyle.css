@@ -1,4 +1,5 @@
 .mainFooter{
+    flex: 0 0 auto;
     background: rgb(52 58 64);
     color: white;
     height: 100px;

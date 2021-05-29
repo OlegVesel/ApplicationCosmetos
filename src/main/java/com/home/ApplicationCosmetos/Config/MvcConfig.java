@@ -7,16 +7,13 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.io.IOException;
 import java.util.List;
 
 @Configuration
-public class MvcConfig implements WebMvcConfigurer {
+public class MvcConfig implements WebMvcConfigurer  {
 
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("home");
-        registry.addViewController("/home").setViewName("home");
-        registry.addViewController("/login").setViewName("login");
-    }
+
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -28,13 +25,13 @@ public class MvcConfig implements WebMvcConfigurer {
 
     }
     //пагинация начинается с 0, чтобы она начиналась с 1 нужен этот метод
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
-        resolver.setOneIndexedParameters(true);
-        argumentResolvers.add(resolver);
-        WebMvcConfigurer.super.addArgumentResolvers(argumentResolvers);
-    }
+//    @Override
+//    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+//        PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
+//        resolver.setOneIndexedParameters(true);
+//        argumentResolvers.add(resolver);
+//        WebMvcConfigurer.super.addArgumentResolvers(argumentResolvers);
+//    }
 }
 
 

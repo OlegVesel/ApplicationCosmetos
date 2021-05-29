@@ -30,7 +30,7 @@ public class UserController {
     public String userList(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user);
         model.addAttribute("users", userRepo.findAll());
-        return "userList";
+        return "UserList";
     }
 
     @GetMapping("{userEdit}")
@@ -40,7 +40,7 @@ public class UserController {
         model.addAttribute("roles", Role.values());
 
 
-        return "userEdit";
+        return "UserEdit";
     }
 
     @PostMapping
@@ -64,7 +64,7 @@ public class UserController {
         }
 
         userRepo.save(userEdit);
-        return "redirect:/user";
+        return "redirect:/User";
     }
 
     @PostMapping("{id}")
@@ -76,7 +76,7 @@ public class UserController {
         model.addAttribute("message", "Пользователь "+ message.get().getUsername() + " успешно удален!");
         userRepo.deleteById(id);
 
-        return "redirect:/user";
+        return "redirect:/User";
 
     }
 }

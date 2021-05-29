@@ -1,55 +1,48 @@
-{{>parts/logRegTemplate}}
+{{>parts/LogRegTemplate}}
 
 
-        <h3 class="text-center mb-5 header">Регистрация</h3>
-        <div class="card cloudyGlass">
-            <div class="card-header"></div>
-            <div class="card-body">
-                <form action="/registration" method="post">
-                    <div class="form-group">
-                        <div>
-                            <label> Имя нового пользователя:</label>
-                                <input class="form-control {{#usernameError}}is-invalid{{/usernameError}}{{^usernameError}} {{/usernameError}}"
-                                       type="text" name="username" {{#newUser.getUsername}}value="{{newUser.getUsername}}"{{/newUser.getUsername}}
-                                    {{^newUser.getUsername}}{{/newUser.getUsername}}/>
-                                {{#usernameError}}
-                                    <div class="invalid-feedback">
-                                        {{usernameError}}
-                                    </div>
-                                {{/usernameError}}
-                        </div>
-                        <div>
-                            <label> Пароль:</label>
-                                <input class="form-control {{#passwordError}}is-invalid{{/passwordError}}{{^passwordError}} {{/passwordError}}"
-                                       type="password" name="password"/>
-                                {{#passwordError}}
-                                    <div class="invalid-feedback">
-                                        {{passwordError}}
-                                    </div>
-                                {{/passwordError}}
-                        </div>
-                        <div>
-                            <label> Повторите пароль:</label>
-                                <input class="form-control {{#password2Error}}is-invalid{{/password2Error}}{{^password2Error}} {{/password2Error}}"
-                                       type="password" name="password2"/>
-                                {{#password2Error}}
-                                    <div class="invalid-feedback">
-                                        {{password2Error}}
-                                    </div>
-                                {{/password2Error}}
-                        </div>
+<h3 class="header text-center mb-5">Регистрация</h3>
+<div class="card cloudyGlass">
+    <div class="card-body content">
+        <form action="/registration" method="post">
+            <div class="logInput">
+                <label> Имя нового пользователя:</label>
+                <input class="form-control {{#usernameError}}is-invalid{{/usernameError}}{{^usernameError}} {{/usernameError}}"
+                       type="text" name="username"
+                       {{#newUser.getUsername}}value="{{newUser.getUsername}}"{{/newUser.getUsername}}
+                    {{^newUser.getUsername}}{{/newUser.getUsername}}/>
+                {{#usernameError}}
+                    <div class="invalid-feedback">
+                        {{usernameError}}
                     </div>
-                    <input type="hidden" name="_csrf" value="{{_csrf.token}}">
-                    <div><input class="btn btn-primary btn-block" type="submit" value="Зарегистрироваться"/></div>
-                </form>
+                {{/usernameError}}
+
+                <label> Пароль:</label>
+                <input class="form-control {{#passwordError}}is-invalid{{/passwordError}}{{^passwordError}} {{/passwordError}}"
+                       type="password" name="password"/>
+                {{#passwordError}}
+                    <div class="invalid-feedback">
+                        {{passwordError}}
+                    </div>
+                {{/passwordError}}
+
+                <label> Повторите пароль:</label>
+                <input class="form-control {{#password2Error}}is-invalid{{/password2Error}}{{^password2Error}} {{/password2Error}}"
+                       type="password" name="password2"/>
+                {{#password2Error}}
+                    <div class="invalid-feedback">
+                        {{password2Error}}
+                    </div>
+                {{/password2Error}}
+            </div>
+            <div class="logBtn">
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+                <input class="btn btn-primary btn-block" type="submit" value="Зарегистрироваться"/>
                 <a class="btn btn-light btn-block mt-2" href="/login">Выйти</a>
             </div>
-        </div>
+        </form>
 
-
-
-
-
-
-
-{{>parts/foot}}
+    </div>
+</div>
+</body>
+</html>

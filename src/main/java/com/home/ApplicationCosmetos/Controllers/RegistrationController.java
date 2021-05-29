@@ -19,15 +19,21 @@ public class RegistrationController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/login")
+    public String login(){
+        return "Login";
+    }
+
+
     @GetMapping("/")
     public String home(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user);
-        return "home";
+        return "Home";
     }
 
     @GetMapping("/registration")
     public String registration() {
-        return "registration";
+        return "Registration";
     }
 
     @PostMapping("/registration")
@@ -36,23 +42,23 @@ public class RegistrationController {
         if (!StringUtils.isEmpty(user.getPassword()) && !user.getPassword().equals(user.getPassword2())) {
             model.addAttribute("passwordError", "Пароли не совпадают!");
             model.addAttribute("newUser", user);
-            return "registration";
+            return "Registration";
         }
         if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);
             model.addAttribute("newUser", user);
-            return "registration";
+            return "Registration";
 
         }
 
         if (!userService.addUser(user)) {
             model.addAttribute("usernameError", "Такой пользователь уже существует");
             model.addAttribute("newUser", user);
-            return "registration";
+            return "Registration";
         }
 
-        return "redirect:/login";
+        return "redirect:/Login";
 
     }
 

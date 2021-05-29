@@ -37,22 +37,33 @@ body::before{
 	border-left: 1px solid rgba(255, 255,255, 0.5);
 	backdrop-filter: blur(5px);
 }
-.cloudyGlass .content{
-    position:absolute;
-    justify-content: center;
-    padding: 10px;
-    top: 10%;
-}
-.cloudyGlass .content .logBtn{
-    transform: translateY(50%);
-    width: 100%;
-
-
-}
 .header{
     position: absolute;
 	top:6%;
-	z-index: 1;
+	font-size: 40px;
+}
+
+.cloudyGlass .content{
+    width:90%;
+    padding: 30px 10px 10px 10px ;/* top right bottom left*/
+    height: 100%;
+}
+.cloudyGlass .content .logInput{
+    text-align:center;
+    font-weight:600;
+
+}
+
+.cloudyGlass .content .logBtn{
+    padding: 20px 10px 10px 10px ;
+    position:absolute;
+    left: 0px;
+    bottom: 0px;
+    width:100%;
+}
+.cloudyGlass .content .logBtn .btn{
+    font-size: 20px;
+    height: 45px;
 }
 
 .btn-primary{

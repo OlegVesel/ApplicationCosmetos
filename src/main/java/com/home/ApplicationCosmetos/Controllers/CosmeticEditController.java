@@ -73,7 +73,8 @@ public class CosmeticEditController {
 
     //метод для копирования полностью, выбранного средства
     @PostMapping("/copy/{id}")
-    public String copyCosmeticProduct(@AuthenticationPrincipal User user, @PathVariable Long id, HttpServletRequest request) {
+    public String copyCosmeticProduct(@AuthenticationPrincipal User user, @PathVariable Long id,
+                                      HttpServletRequest request) {
         CosmeticProduct currentCosPr = null;
         boolean is_open = false;
         if (cosmeticProductRepo.findById(id).isPresent()) currentCosPr = cosmeticProductRepo.findById(id).get();
