@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
     <a class="navbar-brand" href="/">Косметос</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -7,19 +8,23 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/">Домой <span class="sr-only"></span></a>
+            <li class="nav-item" >
+                <a class="nav-link" href="/" > <i class="fas fa-home"></i> Домой <span class="sr-only"></span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/app">Моя косметика <span class="sr-only"></span></a>
+            <li class="nav-item" >
+                <a class="nav-link" href="/app"  ><i class="fas fa-shopping-bag"></i> Моя косметичка <span class="sr-only"></span></a>
             </li>
             {{#user.isAdmin}}
             <li class="nav-item">
-                <a class="nav-link" href="/user">Редактировать пользователей <span class="sr-only"></span></a>
+                <a class="nav-link" href="/user"  ><i class="fas fa-user-edit"></i> Редактировать пользователей <span class="sr-only"></span></a>
             </li>
             {{/user.isAdmin}}
         </ul>
-        <div class="navbar-text mr-3">{{user.getUsername}}</div>
+        <ul class="navbar-nav mr-right" >
+            <li>
+                <a class="nav-link" href="/profile" ><i class="fas fa-user"></i> {{user.getUsername}}</a>
+            </li>
+        </ul>
 
         <form action="/logout" method="post">
             <input type="hidden" name="_csrf" value="{{_csrf.token}}">
@@ -27,3 +32,4 @@
         </form>
     </div>
 </nav>
+

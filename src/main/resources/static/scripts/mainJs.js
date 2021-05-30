@@ -1,3 +1,4 @@
+//функция для раскрашивания разным цветом строк таблицы
 function foo(id, date){
 
     let rowTable = document.getElementById(id)

@@ -19,6 +19,22 @@
      $("#table_product").tablesorter();
 });
 </script>
+
+<!--скрипт делает активными ссылки в навбаре при нажатии-->
+<script>
+$(document).ready(function(){
+        $( ".navbar a" ).on( 'click', function(e) {
+        localStorage.setItem('activeTab', $(e.target).attr('href'));
+        $( '.navbar' ).find( 'li.active' ).removeClass( 'active' );
+        $( this ).parent( 'li' ).addClass( 'active' );
+
+    });
+        var activeTab = localStorage.getItem('activeTab');
+        if(activeTab){
+            $('.navbar a[href="' + activeTab + '"]').addClass( 'active' );
+        }
+});
+</script>
 <!--скрипт для затухания всплывающего окна-->
 <script>
     window.setTimeout(function(){
@@ -26,7 +42,7 @@
         $("#success-alert").slideUp(500);
       });
     },1000);
-  </script>
+</script>
 
 </body>
 </html>

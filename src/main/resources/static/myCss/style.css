@@ -11,6 +11,7 @@ body {
     	min-height: 100%;
 
 }
+
 .mainContainer{
     flex: 1 0 auto;
 }
@@ -51,10 +52,13 @@ body {
 #table_product thead tr th{
     border: 2px solid rgb(110,168,254);
 }
+#table_product tbody tr td{
+    border: 2px solid  rgb(110,168,254);
+}
 .card-body{
     background-color : rgb(0 123 255 / 5%) !important;
 }
-
+/* кнопки копирования, изменения, удаления средств*/
 #copyBtn, #delBtn, #editBtn{
     background: none;
     transition: 0.5s;
@@ -72,7 +76,4 @@ body {
     color: green;
 }
 
-#table_product tbody tr td{
-    border: 2px solid  rgb(110,168,254);
-}
 

@@ -74,17 +74,17 @@
                 {{/time_after_openingError}}
             </div>
             <div class="form-group">
-                <input class="form-control calendar-list {{#shelf_lifeError}}is-invalid{{/shelf_lifeError}}{{^shelf_lifeError}} {{/shelf_lifeError}}"
+                <input class="form-control calendar-list {{#shelfLifeError}}is-invalid{{/shelfLifeError}}{{^shelfLifeError}} {{/shelfLifeError}}"
                        type="date" name="shelfLife"
                        placeholder="Введите срок годности"
-                    {{#cosmeticProduct.getShelf_life}}value="{{cosmeticProduct.getShelf_life}}" {{/cosmeticProduct.getShelf_life}}
-                    {{^cosmeticProduct.getShelf_life}} {{/cosmeticProduct.getShelf_life}}
+                    {{#cosmeticProduct.getShelfLife}}value="{{cosmeticProduct.getShelfLife}}" {{/cosmeticProduct.getShelfLife}}
+                    {{^cosmeticProduct.getShelfLife}} {{/cosmeticProduct.getShelfLife}}
                 >
-                {{#shelf_lifeError}}
+                {{#shelfLifeError}}
                     <div class="invalid-feedback">
-                        {{shelf_lifeError}}
+                       {{shelfLifeError}}
                     </div>
-                {{/shelf_lifeError}}
+                {{/shelfLifeError}}
             </div>
             <a class="btn btn-primary mb-2" data-toggle="collapse" href="#dropOpened" type="button" role="button"
                aria-expanded="false"

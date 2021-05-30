@@ -1,0 +1,7 @@
+{{>parts/Head}}
+<img src="/image/fon.jpg" id="avatar">
+<input class="form-control" type="text"  name="username" value="{{user.getUsername}}">
+<input class="form-control" type="email"  name="email"
+       value="{{#user.getEmail}}{{user.getEmail}}{{/user.getEmail}}
+           {{^user.getEmail}}Вы не указали Email при регистрации{{/user.getEmail}}">
+{{>parts/Foot}}
