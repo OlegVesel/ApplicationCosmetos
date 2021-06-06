@@ -1,7 +1,25 @@
 {{>parts/Head}}
+
+
 <img src="/image/fon.jpg" id="avatar">
-<input class="form-control" type="text"  name="username" value="{{user.getUsername}}">
-<input class="form-control" type="email"  name="email"
-       value="{{#user.getEmail}}{{user.getEmail}}{{/user.getEmail}}
-           {{^user.getEmail}}Вы не указали Email при регистрации{{/user.getEmail}}">
+<form action="/profile/{{user.getId}}" method="post">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" name="username" value="{{user.getUsername}}" id="username" readonly="true">
+        <button class="btn btn-outline-primary" type="button" onclick="edit('username')"><i class="fas fa-edit"></i></button>
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">E-mail</span>
+        <input type="email" class="form-control" name="email" value="{{#user.getEmail}}{{user.getEmail}}{{/user.getEmail}}
+            {{^user.getEmail}}Вы не указали Email при регистрации{{/user.getEmail}}" readonly="false" id="email">
+        <button class="btn btn-outline-primary" type="button" onclick="edit('email')"><i class="fas fa-edit"></i></button>
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Дата регистрации</span>
+        <input type="date" class="form-control disabled" name="dateCreate"
+               value="{{user.getDateCreate}}" readonly="false">
+    </div>
+    <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+    <button type="submit" class="btn btn-primary" id="save" disabled>Сохранить</button>
+    <button type="button" class="btn btn-danger" id="cancel" disabled>Отмена</button>
+</form>
 {{>parts/Foot}}

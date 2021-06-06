@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.UUID;
 
@@ -40,7 +41,9 @@ public class UserService implements UserDetailsService {
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setActivationCode(UUID.randomUUID().toString());
+        user.setDateCreate(LocalDate.now());
+        if (StringUtils.hasLength(user.getEmail()) && StringUtils.hasText(user.getEmail()))
+            user.setActivationCode(UUID.randomUUID().toString());
 
         userRepo.save(user);
 

@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ import java.util.Set;
 @Table(name = "user_info")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "Имя пользователя не должно быть пустым")
     private String username;
@@ -32,6 +33,8 @@ public class User implements UserDetails {
     private String email;
 
     private String activationCode;
+
+    private LocalDate dateCreate;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "User_Role", joinColumns = @JoinColumn(name = "user_id"))
