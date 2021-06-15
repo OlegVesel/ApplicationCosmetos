@@ -1,5 +1,9 @@
 {{>parts/Head}}
-
+{{#editUserError}}
+    <div class="alert alert-info fade show" role="alert" id="success-alert">
+        <strong> {{editUserError}}</strong>
+    </div>
+{{/editUserError}}
 
 <img src="/image/fon.jpg" id="avatar">
 <form action="/profile/{{user.getId}}" method="post">

@@ -30,6 +30,7 @@ public class User implements UserDetails {
 
     private boolean active;
 
+    @Email
     private String email;
 
     private String activationCode;

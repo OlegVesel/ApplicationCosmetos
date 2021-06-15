@@ -1,6 +1,5 @@
 package com.home.ApplicationCosmetos.Controllers;
 
-import com.home.ApplicationCosmetos.Model.CosmeticProduct;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
@@ -27,4 +26,5 @@ public class ControllerUtils {
         else dateDeath = shelfLife;
         return dateDeath;
     }
+
 }

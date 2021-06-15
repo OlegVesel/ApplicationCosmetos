@@ -48,12 +48,16 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
 
         if (StringUtils.hasLength(user.getEmail()) && StringUtils.hasText(user.getEmail())) {
-            String message = String.format("Привет, %s! \n" +
-                    "Для активации своего аккаунта, перейди по ссылке \n " +
-                    "http://192.168.0.104/activate/%s", user.getUsername(), user.getActivationCode());
-            mailSender.sendMail(user.getEmail(), "Активация аккаунта", message);
+            createMail(user);
         }
         return true;
+    }
+
+    public void createMail(User user) {
+        String message = String.format("Привет, %s! \n" +
+                "Для активации своего аккаунта, перейди по ссылке \n " +
+                "http://192.168.0.104/activate/%s", user.getUsername(), user.getActivationCode());
+        mailSender.sendMail(user.getEmail(), "Активация аккаунта", message);
     }
 
     public boolean activateUser(String activationCode) {

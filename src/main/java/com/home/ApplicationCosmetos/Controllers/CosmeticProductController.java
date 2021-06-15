@@ -72,7 +72,6 @@ public class CosmeticProductController {
         LocalDate dateDeath =
                 ControllerUtils.getDateDeath(cosmeticProduct.getTime_after_opening(), cosmeticProduct.getAutopsyDate(), cosmeticProduct.getShelfLife());
 
-
         cosmeticProduct.setOwner(user);
         cosmeticProduct.setDateDeath(dateDeath);
 
