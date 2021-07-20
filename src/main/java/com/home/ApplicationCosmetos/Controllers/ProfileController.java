@@ -54,7 +54,7 @@ public class ProfileController {
 
             }
             userFromDB.setPassword2(userFromDB.getPassword());
-            model.addAttribute("editUserError", "Чтобы измененеия вступили в силу, перезайдите в приложение");
+            model.addAttribute("editUserError", "Чтобы изменения вступили в силу, перезайдите в приложение");
             userRepo.save(userFromDB);
         }
         model.addAttribute("user", userFromDB);

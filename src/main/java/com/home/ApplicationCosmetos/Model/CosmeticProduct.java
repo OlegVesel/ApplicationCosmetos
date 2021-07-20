@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Entity
 public class CosmeticProduct {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotBlank(message = "Поле \"Название\" не должно быть пустым")
     @Length(max = 255, message = "Поле \"Название\" не должно превышать 255 символов")

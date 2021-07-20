@@ -17,7 +17,7 @@ import java.util.Set;
 @Table(name = "user_info")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotBlank(message = "Имя пользователя не должно быть пустым")
     private String username;
@@ -41,7 +41,6 @@ public class User implements UserDetails {
     @CollectionTable(name = "User_Role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
-
 
     public boolean isAdmin(){
         return roles.contains(Role.ADMIN);
