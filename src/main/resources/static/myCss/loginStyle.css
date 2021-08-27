@@ -76,5 +76,19 @@ body::before{
     height: 430px;
 }
 
+/*иконка глаза открытая*/
+.password-control {
+    position: absolute;
+    top: 156px;
+    right: 35px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url(https://snipp.ru/demo/495/view.svg) 0 0 no-repeat;
+}
+/*иконка глаза закрытая*/
+.password-control.view {
+    background: url(https://snipp.ru/demo/495/no-view.svg) 0 0 no-repeat;
+}
 
 

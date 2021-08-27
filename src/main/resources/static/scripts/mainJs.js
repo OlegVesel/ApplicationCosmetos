@@ -1,5 +1,5 @@
 //функция для раскрашивания разным цветом строк таблицы
-function foo(id, date){
+function colorRow(id, date){
 
     let rowTable = document.getElementById(id)
 

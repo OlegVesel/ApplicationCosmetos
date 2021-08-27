@@ -170,7 +170,8 @@
 
 
 <div>
-    <h3>В моей косметичке {{allCosmetic.getTotalElements}} средств</h3>
+    <h3>В моей косметичке {{allCosmetic.getTotalElements}} средств </h3>
+    <h6>(Испортятся в течении месяца {{badSoon}})</h6>
 </div>
 
 
@@ -225,7 +226,7 @@
             </tr>
             <script src="/static/scripts/mainJS.js" type="text/javascript"></script>
             <script>
-                    foo({{id}}, '{{dateDeath}}');
+                    colorRow({{id}}, '{{dateDeath}}');
             </script>
 
         {{/allCosmetic}}

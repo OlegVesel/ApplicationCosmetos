@@ -5,7 +5,21 @@
     </div>
 {{/editUserError}}
 
-<img src="/image/fon.jpg" id="avatar">
+<div class="imageBox">
+    <img src="/image/fon.jpg" id="avatar">
+
+    <button class="btn fas fa-edit" data-toggle="collapse" href="#dropFile" id="showFileBtn">
+    </button>
+    <div class="collapse" id="dropFile">
+        <input class="form-control form-control-sm" type="file" id="formFile">
+    </div>
+</div>
+
+
+
+
+
+
 <form action="/profile/{{user.getId}}" method="post">
     <div class="input-group mb-3">
         <input type="text" class="form-control" name="username" value="{{user.getUsername}}" id="username" readonly="true">

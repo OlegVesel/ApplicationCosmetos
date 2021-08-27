@@ -18,6 +18,8 @@ public interface CosmeticProductRepo extends CrudRepository<CosmeticProduct, Lon
 
     Page<CosmeticProduct> findByOwner(User owner, Pageable pageable);
 
+    List<CosmeticProduct> findByOwner(User owner);
+
 
     @Query(value = "select distinct trim(cp.name) as name from cosmetic_product cp" +
             " where cp.userid = ?1 order by name", nativeQuery = true)
