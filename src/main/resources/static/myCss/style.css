@@ -105,3 +105,50 @@ body {
     flex: 1 1 auto;
     padding: 0.5rem;
 }
+
+.filterPanel{
+    display: flex;
+    padding: 5px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+select {
+    background: #007bff;
+    color: #fff;
+    font-size: 14px;
+    padding: 5px;
+    padding-right: 2px;
+    border: 0;
+    margin: 0;
+    margin-right: 4px;
+    border-radius: 3px;
+    text-indent: 0.01px;
+    transition: 0.5s;
+
+}
+select > option:hover {
+       box-shadow: 0 0 10px 100px orange inset;
+       }
+
+
+.directionFilter{
+    margin-bottom: 0;
+}
+.directionFilter  > input[type=radio] {
+    display: none;
+}
+.directionFilter > i {
+    display:inline-block;
+    font-size: 25px;
+    margin-left: 3px;
+    margin-right: 3px;
+    transition: 0.5s;
+}
+.directionFilter > i:hover{
+    transform: scale(1.3);
+}
+.directionFilter > input[type=radio]:checked + i {
+    color: #007bff;
+}
+

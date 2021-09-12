@@ -4,7 +4,9 @@ import com.home.ApplicationCosmetos.Model.CosmeticProduct;
 import com.home.ApplicationCosmetos.Model.User;
 import com.home.ApplicationCosmetos.Repo.CosmeticProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -26,12 +28,25 @@ public class CosmeticProductController {
     @Autowired
     private CosmeticProductRepo cosmeticProductRepo;
 
+    /**
+     * @param user         -пользователь под которым зашли
+     * @param filter_name  - значение для поиска по наименованию
+     * @param filter_brand - значение для поиска по бренду
+     * @param model        - структура Spring
+     * @param size         - параметр из url для задания размера страницы
+     * @param sortBy       - параметр из url для задания сортировки по столбцу
+     * @param direction    - параметр из url для задания направления сортировки
+     * @return - возвращает название шаблона страницы
+     */
     @GetMapping("/app")
     public String viewCosmeticProduct(@AuthenticationPrincipal User user,
                                       @RequestParam(required = false, defaultValue = "") String filter_name,
                                       @RequestParam(required = false, defaultValue = "") String filter_brand,
                                       Model model,
-                                      @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size = 15) Pageable pageable) {
+                                      @RequestParam(required = false, defaultValue = "15") Integer size,
+                                      @RequestParam(required = false, defaultValue = "id") String sortBy,
+                                      @RequestParam(required = false, defaultValue = "true") boolean direction
+    ) {
 
         Page<CosmeticProduct> filterCosmetic;  //отфильтрованный список средств, которые принадлежат пользователю
         Iterable<String> listOfProducts;    //список названий средств
@@ -42,13 +57,13 @@ public class CosmeticProductController {
         listOfProducts = cosmeticProductRepo.distinctName(user.getId());
         listOfBrands = cosmeticProductRepo.distinctBrand(user.getId());
         if (!filter_name.isEmpty() & !filter_brand.isEmpty()) {
-            pageWithCosmetic = cosmeticProductRepo.findByNameAndBrandAndOwner(filter_name, filter_brand, user, pageable);
+            pageWithCosmetic = cosmeticProductRepo.findByNameAndBrandAndOwner(filter_name, filter_brand, user, PageRequest.of(0, size, direction ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy)));
         } else if (!filter_name.isEmpty() & filter_brand.isEmpty()) {
-            pageWithCosmetic = cosmeticProductRepo.findByNameAndOwner(filter_name, user, pageable);
+            pageWithCosmetic = cosmeticProductRepo.findByNameAndOwner(filter_name, user, PageRequest.of(0, size, direction ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy)));
         } else if (!filter_brand.isEmpty()) {
-            pageWithCosmetic = cosmeticProductRepo.findByBrandAndOwner(filter_brand, user, pageable);
+            pageWithCosmetic = cosmeticProductRepo.findByBrandAndOwner(filter_brand, user, PageRequest.of(0, size, direction ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy)));
         } else {
-            pageWithCosmetic = cosmeticProductRepo.findByOwner(user, pageable);
+            pageWithCosmetic = cosmeticProductRepo.findByOwner(user, PageRequest.of(0, size, direction ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy)));
         }
 
 
@@ -68,7 +83,9 @@ public class CosmeticProductController {
      * @param cosmeticProduct - один продукт
      * @param bindingResult   - для валидации
      * @param model           - структура Spring
-     * @param pageable        - выводим постранично с помощью этой структуры
+     * @param size         - параметр из url для задания размера страницы
+     * @param sortBy       - параметр из url для задания сортировки по столбцу
+     * @param direction    - параметр из url для задания направления сортировки
      * @return возвращаем название странички
      */
     @PostMapping("/app")
@@ -76,7 +93,9 @@ public class CosmeticProductController {
                                      @Valid CosmeticProduct cosmeticProduct,
                                      BindingResult bindingResult,
                                      Model model,
-                                     @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+                                     @RequestParam(required = false, defaultValue = "15") Integer size,
+                                     @RequestParam(required = false, defaultValue = "id") String sortBy,
+                                     @RequestParam(required = false, defaultValue = "true") boolean direction) {
         //вычисляем дату выброса продукта
         LocalDate dateDeath =
                 ControllerUtils.getDateDeath(cosmeticProduct.getTime_after_opening(), cosmeticProduct.getAutopsyDate(), cosmeticProduct.getShelfLife());
@@ -99,7 +118,7 @@ public class CosmeticProductController {
 
         //создаем структуру со страничками и заполняем ее
         Page<CosmeticProduct> pageWithCosmetic;
-        pageWithCosmetic = cosmeticProductRepo.findByOwner(user, pageable);
+        pageWithCosmetic = cosmeticProductRepo.findByOwner(user, PageRequest.of(0,size, direction ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy) ));
         //выкатываем список брендов и средств для подсказок при заполнении
         model.addAttribute("listOfBrands", cosmeticProductRepo.distinctBrand(user.getId()));
         model.addAttribute("listOfProducts", cosmeticProductRepo.distinctName(user.getId()));

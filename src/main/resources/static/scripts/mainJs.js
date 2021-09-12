@@ -32,3 +32,29 @@ function colorRow(id, date){
         	            rowTable.style.background = "rgba(0, 123, 255, 0.2)"
 
     }
+
+
+function changeParametersSorting(){
+    let select = document.getElementsByName('sortParameter'); //найдем наш select в котором лежат критерии сортировки
+    let parameter = select[0].options[select[0].selectedIndex].value; //возьмем из выбранного пункта значение (name, brand, etc..)
+
+    let url = new URL(document.URL); //создадим объект url с нашей странички
+
+    url.searchParams.set('sortBy', parameter);
+    localStorage.setItem('sortParameter', parameter); //запишем параметр в localStorage, чтобы потом восстановить select
+    window.location.href = url //обновим страничку с нашим параметром и заданным значением
+
+}
+function changeDirectionSorting(direction){
+    //asc - true
+    //desc - false
+    //для удобства на бэке, чтобы не плодить if
+    let url = new URL(document.URL); //создадим объект url с нашей странички
+    if (direction === 'asc')
+       url.searchParams.set('direction', 'true');
+    else
+       url.searchParams.set('direction', 'false');
+    localStorage.setItem('sortDirection', direction); //запишем параметр в localStorage, чтобы потом восстановить select
+    window.location.href = url //обновим страничку с нашим параметром и заданным значением
+
+}
