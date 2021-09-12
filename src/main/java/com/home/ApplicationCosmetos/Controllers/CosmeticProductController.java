@@ -58,8 +58,8 @@ public class CosmeticProductController {
         model.addAttribute("filter_brand", filter_brand);       // фильтр по бренду
         model.addAttribute("allCosmetic", pageWithCosmetic);    //полный список продуктов, разбитый по страницам
         model.addAttribute("user", user);                       //авторизованный пользователь
-        model.addAttribute("url", "/app");                   //url на котороый делается запрос для изменения отображаемых страниц
-        model.addAttribute("badSoon", ControllerUtils.amountBadSoon(cosmeticProductRepo.findByOwner(user)));
+        model.addAttribute("url", "/app");                   //url на который делается запрос для изменения отображаемых страниц
+        model.addAttribute("badSoon", ControllerUtils.amountBadSoon(cosmeticProductRepo.findByOwner(user))); //поле содержит количество средств которые испортятся в течение месяца
         return "CosmeticProduct";
     }
 
@@ -67,7 +67,7 @@ public class CosmeticProductController {
      * @param user            - пользователь под которым зашли
      * @param cosmeticProduct - один продукт
      * @param bindingResult   - для валидации
-     * @param model           - мапа спринга
+     * @param model           - структура Spring
      * @param pageable        - выводим постранично с помощью этой структуры
      * @return возвращаем название странички
      */
@@ -86,7 +86,7 @@ public class CosmeticProductController {
         //установим дату выброса
         cosmeticProduct.setDateDeath(dateDeath);
 
-        //если есть ошибки при валидации класса CosmeticProduct то возвращаем его обратно, не сохранив
+        //если есть ошибки при валидации класса CosmeticProduct, то возвращаем его обратно, не сохранив
         if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);
@@ -97,7 +97,7 @@ public class CosmeticProductController {
             cosmeticProductRepo.save(cosmeticProduct);
         }
 
-        //созлаем структуру со страничками и заполнем ее
+        //создаем структуру со страничками и заполняем ее
         Page<CosmeticProduct> pageWithCosmetic;
         pageWithCosmetic = cosmeticProductRepo.findByOwner(user, pageable);
         //выкатываем список брендов и средств для подсказок при заполнении
@@ -107,7 +107,7 @@ public class CosmeticProductController {
         model.addAttribute("user", user);
         //передаем url для обновления страницы (костыль)
         model.addAttribute("url", "/app");
-        //посчитаем сколько средств испортится в течении месяца
+        //посчитаем сколько средств испортится в течение месяца
         model.addAttribute("badSoon", ControllerUtils.amountBadSoon(cosmeticProductRepo.findByOwner(user)));
 
         return "CosmeticProduct";
