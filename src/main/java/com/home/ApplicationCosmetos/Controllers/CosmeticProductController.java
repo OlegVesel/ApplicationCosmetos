@@ -48,7 +48,6 @@ public class CosmeticProductController {
                                       @RequestParam(required = false, defaultValue = "true") boolean direction
     ) {
 
-        Page<CosmeticProduct> filterCosmetic;  //отфильтрованный список средств, которые принадлежат пользователю
         Iterable<String> listOfProducts;    //список названий средств
         Iterable<String> listOfBrands;  //список названий брендов
         Page<CosmeticProduct> pageWithCosmetic = null;
@@ -57,11 +56,11 @@ public class CosmeticProductController {
         listOfProducts = cosmeticProductRepo.distinctName(user.getId());
         listOfBrands = cosmeticProductRepo.distinctBrand(user.getId());
         if (!filter_name.isEmpty() & !filter_brand.isEmpty()) {
-            pageWithCosmetic = cosmeticProductRepo.findByNameAndBrandAndOwner(filter_name, filter_brand, user, PageRequest.of(0, size, direction ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy)));
+            pageWithCosmetic = cosmeticProductRepo.findByNameAndBrandAndOwner(filter_name, filter_brand, user, PageRequest.of(0, Integer.MAX_VALUE, direction ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy)));
         } else if (!filter_name.isEmpty() & filter_brand.isEmpty()) {
-            pageWithCosmetic = cosmeticProductRepo.findByNameAndOwner(filter_name, user, PageRequest.of(0, size, direction ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy)));
+            pageWithCosmetic = cosmeticProductRepo.findByNameAndOwner(filter_name, user, PageRequest.of(0, Integer.MAX_VALUE, direction ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy)));
         } else if (!filter_brand.isEmpty()) {
-            pageWithCosmetic = cosmeticProductRepo.findByBrandAndOwner(filter_brand, user, PageRequest.of(0, size, direction ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy)));
+            pageWithCosmetic = cosmeticProductRepo.findByBrandAndOwner(filter_brand, user, PageRequest.of(0, Integer.MAX_VALUE, direction ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy)));
         } else {
             pageWithCosmetic = cosmeticProductRepo.findByOwner(user, PageRequest.of(0, size, direction ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy)));
         }

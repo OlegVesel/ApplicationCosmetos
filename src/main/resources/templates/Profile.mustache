@@ -6,13 +6,7 @@
 {{/editUserError}}
 
 <div class="imageBox">
-    <img src="/image/fon.jpg" id="avatar">
-
-    <button class="btn fas fa-edit" data-toggle="collapse" href="#dropFile" id="showFileBtn">
-    </button>
-    <div class="collapse" id="dropFile">
-        <input class="form-control form-control-sm" type="file" id="formFile">
-    </div>
+    <img src="/image/userProfileImage/{{user.getUserImageFile}}"  id="avatar">
 </div>
 
 
@@ -20,7 +14,12 @@
 
 
 
-<form action="/profile/{{user.getId}}" method="post">
+<form action="/profile/{{user.getId}}" method="post" enctype="multipart/form-data">
+<!--    <button class="btn fas fa-edit" data-toggle="collapse" href="#dropFile" id="showFileBtn">-->
+<!--    </button>-->
+<!--    <div class="collapse" id="dropFile">-->
+        <input class="form-control form-control-sm my-2" type="file" name="userImageFile" id="formFile" onchange="activateSaveButton()">
+<!--    </div>-->
     <div class="input-group mb-3">
         <input type="text" class="form-control" name="username" value="{{user.getUsername}}" id="username" readonly="true">
         <button class="btn btn-outline-primary" type="button" onclick="edit('username')"><i class="fas fa-edit"></i></button>
@@ -38,6 +37,6 @@
     </div>
     <input type="hidden" name="_csrf" value="{{_csrf.token}}">
     <button type="submit" class="btn btn-primary" id="save" disabled>Сохранить</button>
-    <button type="button" class="btn btn-danger" id="cancel" disabled>Отмена</button>
+    <button type="button" class="btn btn-danger" id="cancel" disabled onclick="disabledAll()">Отмена</button>
 </form>
 {{>parts/Foot}}

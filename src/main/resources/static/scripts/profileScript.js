@@ -17,3 +17,17 @@ function edit(elementId){
     }
 
 }
+
+function activateSaveButton(){
+    document.getElementById('save').removeAttribute('disabled')
+    document.getElementById('cancel').removeAttribute('disabled')
+}
+
+function disabledAll(){
+    document.getElementById('email').setAttribute('readonly',true)
+    document.getElementById('username').setAttribute('readonly',true)
+    document.getElementById('save').setAttribute('disabled',true)
+    document.getElementById('cancel').setAttribute('disabled',true)
+
+
+}

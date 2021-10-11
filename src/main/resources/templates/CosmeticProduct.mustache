@@ -182,18 +182,16 @@
 
             <label class="directionFilter">
                 <input name="sortDirection" type="radio" value="asc" id="asc" onchange="changeDirectionSorting('asc')"/>
-                <i class="fas fa-sort-amount-up"></i>
+                <i class="fas fa-sort-amount-down-alt"></i>
             </label>
             <label class="directionFilter">
                 <input name="sortDirection" type="radio" value="desc" id="desc" onchange="changeDirectionSorting('desc')"/>
-                <i class="fas fa-sort-amount-down-alt"></i>
+                <i class="fas fa-sort-amount-down"></i>
             </label>
         </div>
     </div>
-
-
-
 </div>
+
 
 {{#allCosmetic}}
     <div class="card">
@@ -212,7 +210,6 @@
             <script>
                     colorRow({{id}}, '{{dateDeath}}')
             </script>
-
         </div>
 
         <div class="card-body">

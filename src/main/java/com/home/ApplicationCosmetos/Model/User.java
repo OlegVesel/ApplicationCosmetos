@@ -42,6 +42,8 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
+    private String userImageFile;
+
     public boolean isAdmin(){
         return roles.contains(Role.ADMIN);
     }
