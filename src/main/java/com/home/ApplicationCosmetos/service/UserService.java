@@ -4,9 +4,12 @@ import com.home.ApplicationCosmetos.Model.Role;
 import com.home.ApplicationCosmetos.Model.User;
 import com.home.ApplicationCosmetos.Repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -25,9 +28,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     private MailSender mailSender;
 
-    public UserService(UserRepo userRepo, MailSender mailSender) {
-        this.userRepo = userRepo;
-        this.mailSender = mailSender;
+    @Bean
+    public PasswordEncoder getPasswordEncoder1(){
+        return new BCryptPasswordEncoder(8);
     }
 
     @Override
