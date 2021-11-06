@@ -25,6 +25,12 @@ public class UserService implements UserDetailsService {
     @Autowired
     private MailSender mailSender;
 
+    public UserService(UserRepo userRepo, PasswordEncoder passwordEncoder, MailSender mailSender) {
+        this.userRepo = userRepo;
+        this.passwordEncoder = passwordEncoder;
+        this.mailSender = mailSender;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 
