@@ -58,6 +58,7 @@ public class UserService implements UserDetailsService {
                 "Для активации своего аккаунта, перейди по ссылке \n " +
                 "https://vikina-bag.herokuapp.com/activate/%s", user.getUsername(), user.getActivationCode());
         mailSender.sendMail(user.getEmail(), "Активация аккаунта", message);
+
     }
 
     public boolean activateUser(String activationCode) {
