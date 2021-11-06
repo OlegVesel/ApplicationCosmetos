@@ -29,7 +29,7 @@ public class UserService implements UserDetailsService {
     private MailSender mailSender;
 
     @Bean
-    public PasswordEncoder getPasswordEncoder1(){
+    public PasswordEncoder getPasswordEncoderSecond(){
         return new BCryptPasswordEncoder(8);
     }
 
