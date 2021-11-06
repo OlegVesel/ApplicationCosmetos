@@ -7,6 +7,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.CompletableFuture;
+
 @Service
 public class MailSender {
     @Autowired
@@ -15,7 +17,7 @@ public class MailSender {
     @Value("${spring.mail.username}")
     private String username;
     @Async
-    public void sendMail(String emailTo, String titleEmail, String message){
+    public CompletableFuture<Void> sendMail(String emailTo, String titleEmail, String message){
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 
 
@@ -25,5 +27,6 @@ public class MailSender {
         mailMessage.setText(message);
 
         mailSender.send(mailMessage);
+        return new CompletableFuture<Void>();
     }
 }
