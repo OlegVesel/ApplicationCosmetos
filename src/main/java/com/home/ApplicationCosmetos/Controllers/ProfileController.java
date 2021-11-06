@@ -14,13 +14,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.UUID;
 
 @Controller
 @RequestMapping("/profile")
 public class ProfileController {
-    @Value("${upload.path}")
-    private String uploadPath;
+//    @Value("${upload.path}")
+//    private String uploadPath;
 
     @Autowired
     private UserRepo userRepo;
@@ -43,15 +44,16 @@ public class ProfileController {
                              Model model){
 
         User userFromDB = userRepo.findById(id).orElse(null) ;
+
         if (!userImageFile.isEmpty()){
-            File uploadDir = new File(uploadPath);
+            File uploadDir = new File(this.getClass().getClassLoader().getResource("image/userProfileImage").getPath());
             if (!uploadDir.exists())
                 uploadDir.mkdir();
 
             String uuidFile = UUID.randomUUID().toString();
             String resultFileName = uuidFile + "." + userImageFile.getOriginalFilename();
             try {
-                userImageFile.transferTo(new File(uploadPath + "/" + resultFileName));
+                userImageFile.transferTo(new File(uploadDir + "/" + resultFileName));
             } catch (IOException e) {
                 e.printStackTrace();
             }
