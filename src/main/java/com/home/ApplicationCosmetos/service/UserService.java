@@ -62,6 +62,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void createMail(User user) {
+
         String message = String.format("Привет, %s! \n" +
                 "Для активации своего аккаунта, перейди по ссылке \n " +
                 "https://vikina-bag.herokuapp.com/activate/%s", user.getUsername(), user.getActivationCode());
