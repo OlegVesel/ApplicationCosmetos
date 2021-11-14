@@ -118,7 +118,7 @@
     <h3>Поиск</h3>
     <div class="btn-group">
         <!-- кнопка для вызова строки поиска по категории-->
-        <button class="btn btn-primary"  data-toggle="collapse" href="#chkFilterName" aria-expanded="false"
+        <button class="btn btn-primary" data-toggle="collapse" href="#chkFilterName" aria-expanded="false"
                 aria-haspopup="true" role="button">
             Поиск по категории
         </button>
@@ -132,27 +132,27 @@
     <form method="get" action="/app">
         <div class=" form-group mt-2">
 
-                <div class="collapse my-2" id="chkFilterName">
-                    <input list="fieldFilterName" name="filter_name" class="form-control"
-                           placeholder="Выберите категорию"
-                        {{#filter_name}} value="{{filter_name}}" {{/filter_name}}/>
-                    <datalist id="fieldFilterName">
-                                {{#listOfProducts}}
-                            <option>{{.}}</option>
-                                {{/listOfProducts}}
-                    </datalist>
-                </div>
+            <div class="collapse my-2" id="chkFilterName">
+                <input list="fieldFilterName" name="filter_name" class="form-control"
+                       placeholder="Выберите категорию"
+                    {{#filter_name}} value="{{filter_name}}" {{/filter_name}}/>
+                <datalist id="fieldFilterName">
+                    {{#listOfProducts}}
+                        <option>{{.}}</option>
+                    {{/listOfProducts}}
+                </datalist>
+            </div>
 
-                <div class="collapse my-2" id="chkFilterBrand">
-                    <input list="fieldFilterBrand" name="filter_brand" class="form-control"
-                           placeholder="Выберите бренд"
-                        {{#filter_brand}} value="{{filter_brand}}" {{/filter_brand}}/>
-                    <datalist id="fieldFilterBrand">
-                                {{#listOfBrands}}
-                            <option>{{.}}</option>
-                                {{/listOfBrands}}
-                    </datalist>
-                </div>
+            <div class="collapse my-2" id="chkFilterBrand">
+                <input list="fieldFilterBrand" name="filter_brand" class="form-control"
+                       placeholder="Выберите бренд"
+                    {{#filter_brand}} value="{{filter_brand}}" {{/filter_brand}}/>
+                <datalist id="fieldFilterBrand">
+                    {{#listOfBrands}}
+                        <option>{{.}}</option>
+                    {{/listOfBrands}}
+                </datalist>
+            </div>
             <div class="col">
                 <div class="row my-3">
                     <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Поиск</button>
@@ -185,45 +185,35 @@
                 <i class="fas fa-sort-amount-down-alt"></i>
             </label>
             <label class="directionFilter">
-                <input name="sortDirection" type="radio" value="desc" id="desc" onchange="changeDirectionSorting('desc')"/>
+                <input name="sortDirection" type="radio" value="desc" id="desc"
+                       onchange="changeDirectionSorting('desc')"/>
                 <i class="fas fa-sort-amount-down"></i>
             </label>
         </div>
     </div>
 </div>
 
-
 {{#allCosmetic}}
     <div class="card">
         <div class="card-header" id="{{id}}">
-            <div class="row">
-                <div class="col col-md-2" id="nameAndBrand">{{name}} {{brand}}</div>
-                <div class="col">Объем</div>
-                <div class="col">Срок после вскрытия</div>
-                <div class="col">Срок годности</div>
-                <div class="col">Дата вскрытия</div>
-                <div class="col">Примечание</div>
-                <div class="col">Пора выбрасывать</div>
-                <div class="col">Действие</div>
-            </div>
-            <script src="/static/scripts/mainJs.js" type="text/javascript"></script>
-            <script>
-                    colorRow({{id}}, '{{dateDeath}}')
-            </script>
-        </div>
-
-        <div class="card-body">
-            <div class="row">
-                <div class="col col-md-2"></div>
-                <div class="col">{{volume}}</div>
-                <div class="col">{{time_after_opening}}</div>
-                <div class="col">{{shelfLife}}</div>
-                <div class="col">
-                    {{#autopsyDate}}{{autopsyDate}}{{/autopsyDate}}{{^autopsyDate}}Не вскрыто{{/autopsyDate}}
+            <div class="d-none d-lg-block">
+                <div class="row ">
+                    <div class="col" id="nameAndBrand">{{name}} {{brand}}</div>
+                    <div class="col">Объем</div>
+                    <div class="col text-center">Срок после вскрытия</div>
+                    <div class="col text-center">Срок годности</div>
+                    <div class="col text-center">Дата вскрытия</div>
+                    <div class="col text-center">Примечание</div>
+                    <div class="col text-center">Пора выбрасывать</div>
+                    <div class="col text-center">Действие</div>
                 </div>
-                <div class="col">{{note}}</div>
-                <div class="col">{{dateDeath}}</div>
-                <div class="col">
+            </div>
+            <div class=" d-lg-none ">
+                <div class="row">
+                    <div class="w-75" id="nameAndBrand">{{name}} {{brand}}</div>
+                </div>
+                <div class="row " style="justify-content: space-between;">
+                    <div>Пора выбрасывать: {{dateDeath}}</div>
                     <div class="btn-group" id="{{id}}">
                         <!--кнопка копирования средства -->
                         <form action="/app/copy/{{id}}" method="post">
@@ -239,7 +229,64 @@
                             <input type="hidden" name="_csrf" value="{{_csrf.token}}">
                             <button class="btn  fas fa-trash" id="delBtn" type="submit"></button>
                         </form>
+                        <button class="btn btn-outline-secondary btn-sm btn-circle" data-toggle="collapse"
+                                href="#view{{id}}" role="button"
+                                aria-expanded="false"
+                                aria-haspopup="true">
+                            <i class="fas fa-caret-down"></i>
+                        </button>
                     </div>
+
+                </div>
+            </div>
+            <script src="/static/scripts/mainJs.js" type="text/javascript"></script>
+            <script>
+                    colorRow({{id}}, '{{dateDeath}}')
+
+            </script>
+        </div>
+        <div class="card-body">
+            <div class="d-none d-lg-block">
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col px-4">{{#volume}}{{volume}}{{/volume}}{{^volume}}Не указан{{/volume}}</div>
+                    <div class="col text-center">{{time_after_opening}}</div>
+                    <div class="col text-center">{{shelfLife}}</div>
+                    <div class="col text-center">
+                        {{#autopsyDate}}{{autopsyDate}}{{/autopsyDate}}{{^autopsyDate}}Не вскрыто{{/autopsyDate}}
+                    </div>
+                    <div class="col text-center">{{note}}</div>
+                    <div class="col text-center">{{dateDeath}}</div>
+                    <div class="col">
+                        <div class="btn-group" id="{{id}}">
+                            <!--кнопка копирования средства -->
+                            <form action="/app/copy/{{id}}" method="post">
+                                <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+                                <button class="btn far fa-clone" id="copyBtn"></button>
+                            </form>
+                            <!--кнопка перехода в окно обновления средства -->
+                            <form action="/app/edit/{{id}}" method="get">
+                                <button class="btn  fas fa-pencil-alt" id="editBtn" type="submit"></button>
+                            </form>
+                            <!--кнопка удаления средства -->
+                            <form action="/app/delete/{{id}}" method="post">
+                                <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+                                <button class="btn  fas fa-trash" id="delBtn" type="submit"></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-lg-none">
+                <div class="collapse" id="view{{id}}">
+                    <p class="m-1" style="font-size:12px;">Объем: {{#volume}}{{volume}}{{/volume}}
+                        {{^volume}}Не указан{{/volume}}</p>
+                    <p class="m-1" style="font-size:12px;">Срок после вскрытия: {{time_after_opening}}</p>
+                    <p class="m-1" style="font-size:12px;">Дата
+                        вскрытия: {{#autopsyDate}}{{autopsyDate}}{{/autopsyDate}}
+                        {{^autopsyDate}}Не вскрыто{{/autopsyDate}}</p>
+                    <p class="m-1" style="font-size:12px;">Примечание: {{note}}</p>
+                    <p class="m-1" style="font-size:12px;">Срок годности: {{shelfLife}}</p>
                 </div>
             </div>
         </div>

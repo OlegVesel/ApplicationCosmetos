@@ -93,7 +93,7 @@ public class CosmeticProductController {
                                      BindingResult bindingResult,
                                      Model model,
                                      @RequestParam(required = false, defaultValue = "15") Integer size,
-                                     @RequestParam(required = false, defaultValue = "id") String sortBy,
+                                     @RequestParam(required = false, defaultValue = "name") String sortBy,
                                      @RequestParam(required = false, defaultValue = "true") boolean direction) {
         //вычисляем дату выброса продукта
         LocalDate dateDeath =
