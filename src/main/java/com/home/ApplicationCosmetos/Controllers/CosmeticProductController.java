@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -44,7 +45,7 @@ public class CosmeticProductController {
                                       @RequestParam(required = false, defaultValue = "") String filter_brand,
                                       Model model,
                                       @RequestParam(required = false, defaultValue = "15") Integer size,
-                                      @RequestParam(required = false, defaultValue = "id") String sortBy,
+                                      @RequestParam(required = false, defaultValue = "name") String sortBy,
                                       @RequestParam(required = false, defaultValue = "true") boolean direction
     ) {
 
@@ -114,6 +115,7 @@ public class CosmeticProductController {
             model.addAttribute("messageSuccess", "Средство успешно добавлено");
             cosmeticProductRepo.save(cosmeticProduct);
         }
+
 
         //создаем структуру со страничками и заполняем ее
         Page<CosmeticProduct> pageWithCosmetic;

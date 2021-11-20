@@ -15,95 +15,119 @@
      id="dropGroup1">
     <div class="form-group mt-2">
         <form method="post" action="/app">
-            <div class="form-group">
-                <input list="text_name" name="name"
-                       class="form-control {{#nameError}}is-invalid{{/nameError}}{{^nameError}} {{/nameError}} "
-                       placeholder="Выберите категорию"
-                    {{#cosmeticProduct.getName}}value="{{cosmeticProduct.getName}}" {{/cosmeticProduct.getName}}{{^cosmeticProduct.getName}} {{/cosmeticProduct.getName}}
-                >
-                <datalist id="text_name">
-                    {{#listOfProducts}}
-                        <option value="{{.}}">{{.}}</option>
-                    {{/listOfProducts}}
-                </datalist>
-                {{#nameError}}
-                    <div class="invalid-feedback">
-                        {{nameError}}
-                    </div>
-                {{/nameError}}
-
+            <div class="form-group row">
+                <label for="inputName" class="col-sm-3 col-form-label pr-0">Выберите категорию</label>
+                <div class="col-sm-9">
+                    <input list="text_name" name="name" id="inputName"
+                           class="form-control {{#nameError}}is-invalid{{/nameError}}{{^nameError}} {{/nameError}} "
+                           placeholder="Выберите категорию"
+                        {{#cosmeticProduct.getName}}value="{{cosmeticProduct.getName}}" {{/cosmeticProduct.getName}}{{^cosmeticProduct.getName}} {{/cosmeticProduct.getName}}
+                    >
+                    <datalist id="text_name">
+                        {{#listOfProducts}}
+                            <option value="{{.}}">{{.}}</option>
+                        {{/listOfProducts}}
+                    </datalist>
+                    {{#nameError}}
+                        <div class="invalid-feedback">
+                            {{nameError}}
+                        </div>
+                    {{/nameError}}
+                </div>
             </div>
-            <div class="form-group">
-                <input list="text_brand" name="brand"
-                       class="form-control {{#brandError}}is-invalid{{/brandError}}{{^brandError}} {{/brandError}}"
-                       placeholder="Выберите бренд"
-                    {{#cosmeticProduct.getBrand}}value="{{cosmeticProduct.getBrand}}" {{/cosmeticProduct.getBrand}}{{^cosmeticProduct.getBrand}} {{/cosmeticProduct.getBrand}}
-                >
-                <datalist id="text_brand">
-                    {{#listOfBrands}}
-                        <option value="{{.}}">{{.}}</option>
-                    {{/listOfBrands}}
-                </datalist>
-                {{#brandError}}
-                    <div class="invalid-feedback">
-                        {{brandError}}
-                    </div>
-                {{/brandError}}
+            <div class="form-group row">
+                <label for="inputBrand" class="col-sm-3 col-form-label pr-0">Выберите бренд</label>
+                <div class="col-sm-9">
+                    <input list="text_brand" name="brand" id="inputBrand"
+                           class="form-control {{#brandError}}is-invalid{{/brandError}}{{^brandError}} {{/brandError}}"
+                           placeholder="Выберите бренд"
+                        {{#cosmeticProduct.getBrand}}value="{{cosmeticProduct.getBrand}}" {{/cosmeticProduct.getBrand}}{{^cosmeticProduct.getBrand}} {{/cosmeticProduct.getBrand}}
+                    >
+                    <datalist id="text_brand">
+                        {{#listOfBrands}}
+                            <option value="{{.}}">{{.}}</option>
+                        {{/listOfBrands}}
+                    </datalist>
+                    {{#brandError}}
+                        <div class="invalid-feedback">
+                            {{brandError}}
+                        </div>
+                    {{/brandError}}
+                </div>
             </div>
-            <div class="form-group">
-                <input class="form-control" type="text" name="volume" placeholder="Введите объем"
-                       {{#cosmeticProduct.getVolume}}value="{{cosmeticProduct.getVolume}}"{{/cosmeticProduct.getVolume}}
-                    {{^cosmeticProduct.getVolume}} {{/cosmeticProduct.getVolume}}
-                >
+            <div class="form-group row">
+                <label for="inputVolume" class="col-sm-3 col-form-label pr-0">Введите объем</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" name="volume" id="inputVolume" placeholder="Введите объем"
+                           {{#cosmeticProduct.getVolume}}value="{{cosmeticProduct.getVolume}}"{{/cosmeticProduct.getVolume}}
+                        {{^cosmeticProduct.getVolume}} {{/cosmeticProduct.getVolume}}
+                    >
+                </div>
             </div>
-            <div class="form-group">
-                <input class="form-control {{#time_after_openingError}}is-invalid{{/time_after_openingError}}{{^time_after_openingError}} {{/time_after_openingError}}"
-                       type="number" name="time_after_opening"
-                       placeholder="Введите срок после вскрытия" min="0"
-                    {{#cosmeticProduct.getTime_after_opening}}value="{{cosmeticProduct.getTime_after_opening}}" {{/cosmeticProduct.getTime_after_opening}}
-                    {{^cosmeticProduct.getTime_after_opening}} {{/cosmeticProduct.getTime_after_opening}}
-                >
-                {{#time_after_openingError}}
-                    <div class="invalid-feedback">
-                        <p>Укажите срок после вскрытия, если его нет поставьте 0 </p>
-                    </div>
-                {{/time_after_openingError}}
+            <div class="form-group row">
+                <label for="inputTimeAfterOpening" class="col-sm-3 col-form-label pr-0">Введите срок после
+                    вскрытия</label>
+                <div class="col-sm-9">
+                    <input class="form-control {{#time_after_openingError}}is-invalid{{/time_after_openingError}}{{^time_after_openingError}} {{/time_after_openingError}}"
+                           type="number" name="time_after_opening" id="inputTimeAfterOpening"
+                           placeholder="Введите срок после вскрытия" min="0"
+                        {{#cosmeticProduct.getTime_after_opening}}value="{{cosmeticProduct.getTime_after_opening}}" {{/cosmeticProduct.getTime_after_opening}}
+                        {{^cosmeticProduct.getTime_after_opening}} {{/cosmeticProduct.getTime_after_opening}}
+                    >
+                    {{#time_after_openingError}}
+                        <div class="invalid-feedback">
+                            <p>Укажите срок после вскрытия, если его нет поставьте 0 </p>
+                        </div>
+                    {{/time_after_openingError}}
+                </div>
             </div>
-            <div class="form-group">
-                <input class="form-control calendar-list {{#shelfLifeError}}is-invalid{{/shelfLifeError}}{{^shelfLifeError}} {{/shelfLifeError}}"
-                       type="date" name="shelfLife"
-                       placeholder="Введите срок годности"
-                    {{#cosmeticProduct.getShelfLife}}value="{{cosmeticProduct.getShelfLife}}" {{/cosmeticProduct.getShelfLife}}
-                    {{^cosmeticProduct.getShelfLife}} {{/cosmeticProduct.getShelfLife}}
-                >
-                {{#shelfLifeError}}
-                    <div class="invalid-feedback">
-                        {{shelfLifeError}}
-                    </div>
-                {{/shelfLifeError}}
+            <div class="form-group row">
+                <label for="inputShelfLife" class="col-sm-3 col-form-label pr-0">Введите срок годности</label>
+                <div class="col-sm-9">
+                    <input class="form-control calendar-list {{#shelfLifeError}}is-invalid{{/shelfLifeError}}{{^shelfLifeError}} {{/shelfLifeError}}"
+                           type="date" name="shelfLife" id="inputShelfLife"
+                           placeholder="Введите срок годности"
+                        {{#cosmeticProduct.getShelfLife}}value="{{cosmeticProduct.getShelfLife}}" {{/cosmeticProduct.getShelfLife}}
+                        {{^cosmeticProduct.getShelfLife}} {{/cosmeticProduct.getShelfLife}}
+                    >
+                    {{#shelfLifeError}}
+                        <div class="invalid-feedback">
+                            {{shelfLifeError}}
+                        </div>
+                    {{/shelfLifeError}}
+                </div>
             </div>
             <a class="btn btn-primary mb-2" data-toggle="collapse" href="#dropOpened" type="button" role="button"
                aria-expanded="false"
                aria-haspopup="true"
             >
-                Средство вскрыто
+                Средство уже вскрыто
                 <i class="ml-2 fas fa-caret-down"></i>
             </a>
-            <div class="collapse form-group" id="dropOpened">
-                <input class="form-control mt-2" type="date" name="autopsyDate" placeholder="Введите дату вскрытия">
-            </div>
-            <div class="form-group">
-                <input class="form-control {{#noteError}}is-invalid{{/noteError}}{{^noteError}} {{/noteError}}"
-                       name="note"
-                       placeholder="Примечание"
-                       {{#cosmeticProduct.getNote}}value="{{cosmeticProduct.getNote}}"{{/cosmeticProduct.getNote}}
-                    {{^cosmeticProduct.getNote}}{{/cosmeticProduct.getNote}}
-                >
-                {{#noteError}}
-                    <div class="invalid-feedback">
-                        {{noteError}}
+            <div class="collapse" id="dropOpened">
+                <div class="form-group row">
+                    <label for="inputAutopsyDate" class="col-sm-3 col-form-label pr-0">Введите дату вскрытия</label>
+                    <div class="col-sm-9">
+                        <input class="form-control mt-2" type="date" name="autopsyDate" id="inputAutopsyDate"
+                               placeholder="Введите дату вскрытия">
                     </div>
-                {{/noteError}}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputNote" class="col-sm-3 col-form-label pr-0">Введите примечание</label>
+                <div class="col-sm-9">
+                    <input class="form-control {{#noteError}}is-invalid{{/noteError}}{{^noteError}} {{/noteError}}"
+                           name="note" id="inputNote"
+                           placeholder="Примечание"
+                           {{#cosmeticProduct.getNote}}value="{{cosmeticProduct.getNote}}"{{/cosmeticProduct.getNote}}
+                        {{^cosmeticProduct.getNote}}{{/cosmeticProduct.getNote}}
+                    >
+                    {{#noteError}}
+                        <div class="invalid-feedback">
+                            {{noteError}}
+                        </div>
+                    {{/noteError}}
+                </div>
             </div>
 
             <input type="hidden" name="_csrf" value="{{_csrf.token}}">
@@ -243,6 +267,14 @@
             <script>
                     colorRow({{id}}, '{{dateDeath}}')
 
+
+
+
+
+
+
+
+
             </script>
         </div>
         <div class="card-body">
@@ -278,6 +310,19 @@
                 </div>
             </div>
             <div class="d-lg-none">
+                <style>
+                    .card-body {
+                        padding: 0;
+                    }
+
+
+
+
+
+
+
+
+                </style>
                 <div class="collapse" id="view{{id}}">
                     <p class="m-1" style="font-size:12px;">Объем: {{#volume}}{{volume}}{{/volume}}
                         {{^volume}}Не указан{{/volume}}</p>

@@ -7,10 +7,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.InputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 
 @Entity
-public class CosmeticProduct {
+public class CosmeticProduct  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

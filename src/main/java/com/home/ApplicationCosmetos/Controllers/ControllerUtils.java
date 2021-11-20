@@ -3,6 +3,7 @@ package com.home.ApplicationCosmetos.Controllers;
 import com.home.ApplicationCosmetos.Model.CosmeticProduct;
 import com.home.ApplicationCosmetos.Model.User;
 import com.home.ApplicationCosmetos.Repo.CosmeticProductRepo;
+import org.springframework.data.domain.Page;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
