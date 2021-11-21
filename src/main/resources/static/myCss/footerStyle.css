@@ -1,9 +1,11 @@
 .mainFooter{
-    flex: 0 0 auto;
+    display:flex;
+    justify-content: flex-end;
     background: rgb(52 58 64);
     color: white;
     height: 100px;
     text-align: right;
+    z-index:1;
 }
 
 .mainFooter .divFeedback {
