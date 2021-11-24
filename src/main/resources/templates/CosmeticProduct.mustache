@@ -6,7 +6,6 @@
     </div>
 {{/messageSuccess}}
 
-
 <hr>
 <button class="double-border-button" data-toggle="collapse" href="#dropGroup1" role="button" aria-expanded="false"
         aria-haspopup="true">
@@ -138,58 +137,17 @@
 </div>
 <hr>
 
-
-<div>
-    <h3>Поиск</h3>
-    <div class="btn-group">
-        <!-- кнопка для вызова строки поиска по категории-->
-        <button class="btn btn-primary" data-toggle="collapse" href="#chkFilterName" aria-expanded="false"
-                aria-haspopup="true" role="button">
-            Поиск по категории
-        </button>
-        <!-- кнопка для вызова строки поиска по бренду-->
-        <button class="btn btn-primary" data-toggle="collapse" href="#chkFilterBrand" aria-expanded="false"
-                aria-haspopup="true" role="button">
-            Поиск по бренду
-        </button>
-    </div>
-    <form method="get" action="/app">
-        <div class=" form-group mt-2">
-
-            <div class="collapse my-2" id="chkFilterName">
-                <input list="fieldFilterName" name="filter_name" class="form-control"
-                       placeholder="Выберите категорию"
-                    {{#filter_name}} value="{{filter_name}}" {{/filter_name}}/>
-                <datalist id="fieldFilterName">
-                    {{#listOfProducts}}
-                        <option>{{.}}</option>
-                    {{/listOfProducts}}
-                </datalist>
-            </div>
-
-            <div class="collapse my-2" id="chkFilterBrand">
-                <input list="fieldFilterBrand" name="filter_brand" class="form-control"
-                       placeholder="Выберите бренд"
-                    {{#filter_brand}} value="{{filter_brand}}" {{/filter_brand}}/>
-                <datalist id="fieldFilterBrand">
-                    {{#listOfBrands}}
-                        <option>{{.}}</option>
-                    {{/listOfBrands}}
-                </datalist>
-            </div>
-            <div class="col">
-                <div class="row my-3">
-                    <button class="double-border-button" type="submit"><i class="fas fa-search"></i> Поиск</button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
+<h3>В моей косметичке {{allCosmetic.getTotalElements}} средств </h3>
+<h6>(Испортятся в течение месяца {{badSoon}})</h6>
 
 <div class="row">
     <div class="col">
-        <h3>В моей косметичке {{allCosmetic.getTotalElements}} средств </h3>
-        <h6>(Испортятся в течение месяца {{badSoon}})</h6>
+        <form action="/app" method="get" id="searchForm">
+            <input type="text" name="find" id="searchInput"
+                   placeholder="Искать здесь..."
+                {{#find}}value="{{find}}" {{/find}}>
+            <button class="double-border-button" type="submit" id="searchButton"><i class="fas fa-search"></i></button>
+        </form>
     </div>
     <div class="col">
         <div class="filterPanel">
@@ -267,14 +225,6 @@
             <script>
                     colorRow({{id}}, '{{dateDeath}}')
 
-
-
-
-
-
-
-
-
             </script>
         </div>
         <div class="card-body">
@@ -314,12 +264,6 @@
                     .card-body {
                         padding: 0;
                     }
-
-
-
-
-
-
 
 
                 </style>

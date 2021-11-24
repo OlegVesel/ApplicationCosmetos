@@ -4,12 +4,9 @@ import com.home.ApplicationCosmetos.Model.CosmeticProduct;
 import com.home.ApplicationCosmetos.Model.User;
 import com.home.ApplicationCosmetos.Repo.CosmeticProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -30,19 +26,17 @@ public class CosmeticProductController {
     private CosmeticProductRepo cosmeticProductRepo;
 
     /**
-     * @param user         -пользователь под которым зашли
-     * @param filter_name  - значение для поиска по наименованию
-     * @param filter_brand - значение для поиска по бренду
-     * @param model        - структура Spring
-     * @param size         - параметр из url для задания размера страницы
-     * @param sortBy       - параметр из url для задания сортировки по столбцу
-     * @param direction    - параметр из url для задания направления сортировки
+     * @param user      -пользователь под которым зашли
+     * @param find      - что ищет пользователь
+     * @param model     - структура Spring
+     * @param size      - параметр из url для задания размера страницы
+     * @param sortBy    - параметр из url для задания сортировки по столбцу
+     * @param direction - параметр из url для задания направления сортировки
      * @return - возвращает название шаблона страницы
      */
     @GetMapping("/app")
     public String viewCosmeticProduct(@AuthenticationPrincipal User user,
-                                      @RequestParam(required = false, defaultValue = "") String filter_name,
-                                      @RequestParam(required = false, defaultValue = "") String filter_brand,
+                                      @RequestParam(required = false, defaultValue = "") String find,
                                       Model model,
                                       @RequestParam(required = false, defaultValue = "15") Integer size,
                                       @RequestParam(required = false, defaultValue = "name") String sortBy,
@@ -56,12 +50,8 @@ public class CosmeticProductController {
 
         listOfProducts = cosmeticProductRepo.distinctName(user.getId());
         listOfBrands = cosmeticProductRepo.distinctBrand(user.getId());
-        if (!filter_name.isEmpty() & !filter_brand.isEmpty()) {
-            pageWithCosmetic = cosmeticProductRepo.findByNameAndBrandAndOwner(filter_name, filter_brand, user, PageRequest.of(0, Integer.MAX_VALUE, direction ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy)));
-        } else if (!filter_name.isEmpty() & filter_brand.isEmpty()) {
-            pageWithCosmetic = cosmeticProductRepo.findByNameAndOwner(filter_name, user, PageRequest.of(0, Integer.MAX_VALUE, direction ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy)));
-        } else if (!filter_brand.isEmpty()) {
-            pageWithCosmetic = cosmeticProductRepo.findByBrandAndOwner(filter_brand, user, PageRequest.of(0, Integer.MAX_VALUE, direction ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy)));
+        if (!find.isEmpty()) {
+            pageWithCosmetic = cosmeticProductRepo.findBySearch(user.getId(), find, PageRequest.of(0, Integer.MAX_VALUE, direction ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy)));
         } else {
             pageWithCosmetic = cosmeticProductRepo.findByOwner(user, PageRequest.of(0, size, direction ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy)));
         }
@@ -69,8 +59,7 @@ public class CosmeticProductController {
 
         model.addAttribute("listOfBrands", listOfBrands);       //список брендов для выпадающего списка
         model.addAttribute("listOfProducts", listOfProducts);   //список средств для выпадающего списка
-        model.addAttribute("filter_name", filter_name);         // фильтр по средству для отображения
-        model.addAttribute("filter_brand", filter_brand);       // фильтр по бренду
+        model.addAttribute("find", find);                       // то, что искал пользователь, кидаем ему обратно
         model.addAttribute("allCosmetic", pageWithCosmetic);    //полный список продуктов, разбитый по страницам
         model.addAttribute("user", user);                       //авторизованный пользователь
         model.addAttribute("url", "/app");                   //url на который делается запрос для изменения отображаемых страниц
@@ -83,9 +72,9 @@ public class CosmeticProductController {
      * @param cosmeticProduct - один продукт
      * @param bindingResult   - для валидации
      * @param model           - структура Spring
-     * @param size         - параметр из url для задания размера страницы
-     * @param sortBy       - параметр из url для задания сортировки по столбцу
-     * @param direction    - параметр из url для задания направления сортировки
+     * @param size            - параметр из url для задания размера страницы
+     * @param sortBy          - параметр из url для задания сортировки по столбцу
+     * @param direction       - параметр из url для задания направления сортировки
      * @return возвращаем название странички
      */
     @PostMapping("/app")
@@ -119,7 +108,7 @@ public class CosmeticProductController {
 
         //создаем структуру со страничками и заполняем ее
         Page<CosmeticProduct> pageWithCosmetic;
-        pageWithCosmetic = cosmeticProductRepo.findByOwner(user, PageRequest.of(0,size, direction ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy) ));
+        pageWithCosmetic = cosmeticProductRepo.findByOwner(user, PageRequest.of(0, size, direction ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy)));
         //выкатываем список брендов и средств для подсказок при заполнении
         model.addAttribute("listOfBrands", cosmeticProductRepo.distinctBrand(user.getId()));
         model.addAttribute("listOfProducts", cosmeticProductRepo.distinctName(user.getId()));
@@ -132,8 +121,5 @@ public class CosmeticProductController {
 
         return "CosmeticProduct";
     }
-
-
-
 
 }

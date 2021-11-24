@@ -1,0 +1,48 @@
+{{>parts/Head}}
+<hr>
+
+<form action="/apptest" method="get" id="searchForm">
+    <input type="text" name="find" id="searchInput">
+    <button class="double-border-button" type="submit" id="searchButton"><i class="fas fa-search"></i></button>
+</form>
+
+<div>
+    {{find}}
+</div>
+<style>
+    #searchForm {
+  position: relative;
+  width: 300px;
+  margin: 0 auto;
+}
+
+#searchInput, #searchButton {
+  border: none;
+  outline: none;
+  border-radius: 3px;
+}
+#searchInput {
+  width: 100%;
+  height: 42px;
+  background: #F9F0DA;
+  padding-left: 15px;
+}
+#searchButton {
+padding:0;
+margin: 6px;
+  height: 30px;
+  width: 30px;
+  top:0;
+  right:0;
+  position: absolute;
+  background: #F15B42;
+  cursor: pointer;
+}
+
+
+</style>
+{{#findCosmetic}}
+{{.}}
+    {{/findCosmetic}}
+
+{{>parts/Foot}}
