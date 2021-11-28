@@ -97,19 +97,30 @@
                     {{/shelfLifeError}}
                 </div>
             </div>
-            <a class="btn btn-primary mb-2" data-toggle="collapse" href="#dropOpened" type="button" role="button"
-               aria-expanded="false"
-               aria-haspopup="true"
-            >
-                Средство уже вскрыто
-                <i class="ml-2 fas fa-caret-down"></i>
-            </a>
-            <div class="collapse" id="dropOpened">
-                <div class="form-group row">
-                    <label for="inputAutopsyDate" class="col-sm-3 col-form-label pr-0">Введите дату вскрытия</label>
-                    <div class="col-sm-9">
-                        <input class="form-control mt-2" type="date" name="autopsyDate" id="inputAutopsyDate"
-                               placeholder="Введите дату вскрытия">
+            <div class="form-group row">
+                <div class="col-sm-3" style="padding-top: 7px;">
+                    <input type="checkbox" class="checkbox" id="showAutopsyDate"
+                           onclick="
+                       if(this.checked){
+                            let input = document.getElementById('divAutopsyDate')
+                            input.classList.add('show')
+                       }
+                       else {
+                            let input = document.getElementById('divAutopsyDate')
+                            input.classList.remove('show')
+                            }  ">
+                    <label for="showAutopsyDate">Средство уже вскрыто</label>
+                </div>
+                <div class="collapse col" id="divAutopsyDate">
+                    <div class="row">
+                        <div class="col-4" style="padding-top: 7px;">
+                            <label for="inputAutopsyDate" id="labelAutopsyDate">Введите
+                                дату вскрытия</label>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" type="date" name="autopsyDate" id="inputAutopsyDate"
+                                   placeholder="Введите дату вскрытия">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -225,6 +236,10 @@
             <script>
                     colorRow({{id}}, '{{dateDeath}}')
 
+
+
+
+
             </script>
         </div>
         <div class="card-body">
@@ -264,6 +279,10 @@
                     .card-body {
                         padding: 0;
                     }
+
+
+
+
 
 
                 </style>
